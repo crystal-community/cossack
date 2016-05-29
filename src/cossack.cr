@@ -1,5 +1,9 @@
-require "./cossack/*"
+require "http"
+
+require "./cossack/**"
 
 module Cossack
-  # TODO Put your code here
+  def self.new(*args) : Connection
+    Cossack::Connection.new(*args)
+  end
 end
