@@ -1,6 +1,6 @@
 require "../src/cossack"
 
-cossack = Cossack.new
+require "colorize"
 
 class DurationLogger < Cossack::Middleware
   def call(env : Cossack::Env) : Cossack::Env
@@ -8,23 +8,42 @@ class DurationLogger < Cossack::Middleware
 
     @app.call(env)
 
-    duration = (Time.now - start_time)
-
-    puts "#{env.request.url}   #{duration}"
+    duration = (Time.now - start_time).to_f
+    print "DurationLogger".colorize.green
+    puts " [#{duration.colorize.blue}] #{env.request.url}"
 
     env
   end
 end
 
-cossack.add_middleware(Cossack::Middleware.new)
-cossack.add_middleware(DurationLogger.new)
-cossack.finalize!
+class Cache < Cossack::Middleware
+  def initialize
+    super
+    @cache = {} of String => Cossack::Response
+  end
 
-response = cossack.get("http://jsonplaceholder.typicode.com/posts", {"postId" => "1"})
+  def call(env)
+    url = env.request.url
+    if @cache[url]?
+      env.response = @cache[url]
+    else
+      @app.call(env)
+      @cache[url] = env.response as Cossack::Response
+    end
+
+    env
+  end
+end
+
+cossack = Cossack::Client.new do |client|
+  client.add_middleware Cache.new
+  client.add_middleware DurationLogger.new
+end
 
 
-pp response.status
-#puts
-#pp response.headers
-#puts
-#puts response.body[0..200]
+3.times do
+  response = cossack.get("http://jsonplaceholder.typicode.com/posts", {"postId" => "1"})
+  pp response.status
+  puts response.body[0..100].gsub("\n", " ").gsub(/\s+/, " ")
+  puts
+end
