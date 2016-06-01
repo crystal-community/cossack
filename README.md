@@ -2,8 +2,15 @@
 
 Simple and flexible HTTP client for Crystal programming language.
 
-## Installation
+## Roadmap
+* [ ] Use URI to parse URL
+* [ ] Allow `Client` be initialized with base `url`
+* [ ] Support of all HTTP verbs `get`, `post`, `put`, `patch`, `delete`, `head`, `options`
+* [ ] Examples
+* [ ] Proper unit tests for what's already written
+* [ ] Good documentation, describing the concept and usage.
 
+## Installation
 
 Add this to your application's `shard.yml`:
 
