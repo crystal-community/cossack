@@ -1,13 +1,18 @@
 module Cossack
   class Middleware
-    @app : HttpAdapter|Middleware
+    @app : Adapter|Middleware
 
     def initialize
-      @app = HttpAdapter.new
+      @app = NullAdapter.instance
     end
 
-    def app=(app : HttpAdapter|Middleware)
-      @app = app
+    def app=(app : Adapter|Middleware)
+      if @app.is_a?(NullAdapter)
+        @app = app
+      else
+        raise Error.new("Use one instance of middleware per Cossack::Client. " \
+                        "Middleware #{self.inspect} is already in use.")
+      end
     end
 
     def app
