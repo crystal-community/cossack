@@ -1,4 +1,4 @@
-# Cossack
+# Cossack <img src="https://cloud.githubusercontent.com/assets/113512/15764341/65d90c06-292a-11e6-8f91-44ed93e024f8.png" alt="crystal Cossack logo" width="48">
 
 Simple and flexible HTTP client for Crystal programming language.
 
