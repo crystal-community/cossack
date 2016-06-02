@@ -1,7 +1,7 @@
 require "kemal"
 
 get "/" do
-  "Hello World!"
+  "root"
 end
 
 get "/math/add" do |env|
