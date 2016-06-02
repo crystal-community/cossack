@@ -1,5 +1,5 @@
 module Cossack
-  class HttpAdapter
+  class HttpAdapter < Adapter
     def call(env : Env) : Env
       if env.request.method == :get
         env.response = get(env.request)
