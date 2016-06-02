@@ -3,10 +3,16 @@
 Simple and flexible HTTP client for Crystal programming language.
 
 ## Roadmap
-* [ ] Use URI to parse URL
-* [ ] Allow `Client` be initialized with base `url`
+* [x] Middleware support
+* [x] Use URI to parse URL
+* [x] Allow `Client` be initialized with base `url`
+* [ ] Support Symbols, Integers, Floats in params (must be coerced to strings)
 * [ ] Support of all HTTP verbs `get`, `post`, `put`, `patch`, `delete`, `head`, `options`
+* [ ] Follow redirections
+* [ ] SSL
 * [ ] Examples
+* [ ] Swapping connections [like Hurley does](https://github.com/lostisland/hurley#connections)
+* [ ] Timeout
 * [ ] Proper unit tests for what's already written
 * [ ] Good documentation, describing the concept and usage.
 
