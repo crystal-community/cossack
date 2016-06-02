@@ -1,10 +1,13 @@
 module Cossack
   class Request
-    getter :method, :url, :params
+    @method : Symbol
+    @uri : URI
+    @params : Params
+    @headers : HTTP::Headers
 
-    alias Params = Hash(String, String)
+    property :method, :uri, :params, :headers
 
-    def initialize(@method : Symbol, @url : String, @params : Params)
+    def initialize(@method : Symbol, @uri : URI, @headers : HTTP::Headers, @params : Params)
     end
   end
 end

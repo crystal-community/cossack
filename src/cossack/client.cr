@@ -1,30 +1,36 @@
 module Cossack
   class Client
+    USER_AGENT = "Cossack v#{VERSION}"
+
     @base_uri : URI
+    @headers : HTTP::Headers
     @app : HttpAdapter|Middleware
 
+    getter :base_uri, :headers
+
     def initialize(base_url = nil)
+      @headers = default_headers
+      @app = HttpAdapter.new
+
       if base_url
         @base_uri = URI.parse(base_url)
       else
         @base_uri = URI.new
       end
 
-      @middlewares = [] of Middleware
-      @app = HttpAdapter.new
       yield self
     end
 
-    # TODO: refactor duplications
+    # With block given...
     def initialize(base_url = nil)
+      @headers = default_headers
+      @app = HttpAdapter.new
+
       if base_url
         @base_uri = URI.parse(base_url)
       else
         @base_uri = URI.new
       end
-
-      @middlewares = [] of Middleware
-      @app = HttpAdapter.new
     end
 
 
@@ -33,18 +39,33 @@ module Cossack
       @app = md
     end
 
-    def get(url_or_path : String, params : Hash(String, String) = {} of String => String) : Response
+    def get(url_or_path : String, params : Params = Params.new) : Response
       uri = complete_uri!(URI.parse(url_or_path))
-
-      puts uri.to_s
-
-      request = Request.new(:get, uri.to_s, params)
+      request = Request.new(:get, uri, @headers.clone, params)
       env = Env.new(request)
       @app.call(env).response as Response
     end
 
+    # Overload with block
+    def get(url_or_path : String, params : Params = Params.new) : Response
+      uri = complete_uri!(URI.parse(url_or_path))
+      request = Request.new(:get, uri, default_headers, params)
+      yield(request)
+      env = Env.new(request)
+      @app.call(env).response as Response
+    end
+
+
+
+
+    private def default_headers
+      HTTP::Headers.new.tap do |headers|
+        headers["User-Agent"] = USER_AGENT
+      end
+    end
+
     # Add missing part of URI from the base URI.
-    def complete_uri!(uri)
+    private def complete_uri!(uri)
       uri.scheme ||= @base_uri.scheme
       uri.host ||= @base_uri.host
       uri.port ||= @base_uri.port

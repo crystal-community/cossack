@@ -10,11 +10,13 @@ module Cossack
     end
 
     def get(request) : Response
-      params_str = HTTP::Params.build do |form|
+      query = HTTP::Params.build do |form|
         request.params.each { |name, val| form.add(name, val) }
       end
-      url = "#{request.url}?#{params_str}"
-      http_response = HTTP::Client.get(url)
+      uri = request.uri.clone
+      uri.query = query
+
+      http_response = HTTP::Client.get(uri, request.headers)
 
       Response.new(http_response.status_code, http_response.headers, http_response.body)
     end

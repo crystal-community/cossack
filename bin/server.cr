@@ -11,4 +11,9 @@ get "/math/add" do |env|
   a + b
 end
 
+get "/http/header/:header_name" do |env|
+  header_name = env.params.url["header_name"].to_s
+  env.request.headers[header_name]
+end
+
 Kemal.run

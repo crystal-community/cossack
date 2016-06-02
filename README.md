@@ -6,6 +6,8 @@ Simple and flexible HTTP client for Crystal programming language.
 * [x] Middleware support
 * [x] Use URI to parse URL
 * [x] Allow `Client` be initialized with base `url`
+* [x] support headers for individual request
+* [x] support headers for Client
 * [ ] Support of all HTTP verbs `get`, `post`, `put`, `patch`, `delete`, `head`, `options`
 * [ ] Follow redirections
 * [ ] SSL
