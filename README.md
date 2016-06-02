@@ -44,10 +44,10 @@ cossack.get("http://some.url/path")
 
 ## Development
 
-To run specs:
+To run test:
 
 ```
-crystal spec
+make test
 ```
 
 ## Contributors

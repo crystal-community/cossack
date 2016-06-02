@@ -5,3 +5,7 @@ authors:
   - Sergey Potapov <blake131313@gmail.com>
 
 license: MIT
+
+development_dependencies:
+  kemal:
+    github: sdogruyol/kemal

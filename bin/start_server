@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+echo "Building ./bin/server.cr ..."
+crystal build ./bin/server.cr -o ./tmp/server
+
+echo "Starting the test server..."
+./tmp/server -p 3999 &> ./tmp/server.log &
+SERVER_PID=$!
+
+sleep 0.1
+
+# Is the server running?
+ps --pid $SERVER_PID | grep $SERVER_PID > /dev/null
+if [ $? -eq 0 ]; then
+  echo $SERVER_PID > ./tmp/server.pid
+  echo "Test server started, PID=$!"
+  exit 0
+else
+  cat ./tmp/server.log
+  exit 1
+fi
