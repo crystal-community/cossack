@@ -11,33 +11,18 @@ get "/math/add" do |env|
   a + b
 end
 
-get "/http/header/:header_name" do |env|
-  header_name = env.params.url["header_name"].to_s
-  env.request.headers[header_name]
-end
+{% for method in %w(get post put patch delete options) %}
+  {{method.id}} "/http/reflect" do |env|
+    env.response.headers["REQUEST-METHOD"] = env.request.method.to_s
+    env.response.headers["REQUEST-BODY"] = env.request.body.to_s
 
-post "/http/header/:header_name" do |env|
-  header_name = env.params.url["header_name"].to_s
-  env.request.headers[header_name]
-end
-
-post "/http/body" do |env|
-  env.response.headers["X-METHOD"] = "POST"
-  env.request.body
-end
-
-macro define_http_reflect(methods)
-  {% for method in methods %}
-    {{method}} "/http/reflect" do |env|
-      env.response.headers["REQUEST-METHOD"] = env.request.method.to_s
-      env.response.headers["REQUEST-BODY"] = env.request.body.to_s
-      env.response.headers["REQUEST-HEADER-X-FOO"] = env.request.headers["X-FOO"]?.to_s
-      env.request.body.to_s
+    env.request.headers.each do |name, value|
+      new_name = "REQUEST-HEADER-#{name}"
+      env.response.headers[new_name] = value
     end
-  {% end %}
-end
 
-define_http_reflect [get, post, put, patch, delete, options]
-
+    env.request.body.to_s
+  end
+{% end %}
 
 Kemal.run

@@ -1,7 +1,7 @@
 require "../../spec_helper"
 
 Spec2.describe "OPTIONS requests" do
-  let(client) { Cossack::Client.new("http://localhost:3999") }
+  let(client) { Cossack::Client.new(TEST_SERVER_URL) }
 
   describe "#options" do
     it "sends OPTIONS request" do

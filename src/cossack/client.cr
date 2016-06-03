@@ -39,56 +39,47 @@ module Cossack
       @app = md
     end
 
-    macro define_get_like_http_methods(methods)
-      {% for method in methods %}
-        def {{method}}(url_or_path : String, params : Params = Params.new) : Response
-          {{method}}(url_or_path, params) { }
-        end
+    {% for method in %w(get delete head options) %}
+      def {{method.id}}(url_or_path : String, params : Params = Params.new) : Response
+        {{method.id}}(url_or_path, params) { }
+      end
 
-        def {{method}}(url_or_path : String, params : Params|Nil = nil) : Response
-          uri = complete_uri!(URI.parse(url_or_path))
+      def {{method.id}}(url_or_path : String, params : Params|Nil = nil) : Response
+        uri = complete_uri!(URI.parse(url_or_path))
 
-          if params
-            query = HTTP::Params.build do |form|
-              (params as Params).each { |name, val| form.add(name, val) }
-            end
-
-            if uri.query
-              uri
-            else
-              uri.query = query
-            end
+        if params
+          query = HTTP::Params.build do |form|
+            (params as Params).each { |name, val| form.add(name, val) }
           end
 
-          request = Request.new(:{{method}}, uri, @headers.clone)
-          yield(request)
-          env = Env.new(request)
-          @app.call(env).response as Response
-        end
-      {% end %}
-    end
-
-    define_get_like_http_methods [get, delete, head, options]
-
-
-    macro define_post_like_http_methods(names)
-      {% for name, index in names %}
-        def {{name}}(url_or_path : String, body : String = "")
-          {{name}}(url_or_path, body) { }
+          if uri.query
+            uri.query = [uri.query, query].join("&")
+          else
+            uri.query = query
+          end
         end
 
-        def {{name}}(url_or_path : String, body : String = "")
-          uri = complete_uri!(URI.parse(url_or_path))
-          request = Request.new(:{{name}}, uri, @headers.clone, body)
-          yield(request)
-          env = Env.new(request)
-          @app.call(env).response as Response
-        end
-      {% end %}
-    end
+        request = Request.new(:{{method.id}}, uri, @headers.clone)
+        yield(request)
+        env = Env.new(request)
+        @app.call(env).response as Response
+      end
+    {% end %}
 
-    define_post_like_http_methods [post, put, patch]
 
+    {% for method in %w(post put patch) %}
+      def {{method.id}}(url_or_path : String, body : String = "")
+        {{method.id}}(url_or_path, body) { }
+      end
+
+      def {{method.id}}(url_or_path : String, body : String = "")
+        uri = complete_uri!(URI.parse(url_or_path))
+        request = Request.new(:{{method.id}}, uri, @headers.clone, body)
+        yield(request)
+        env = Env.new(request)
+        @app.call(env).response as Response
+      end
+    {% end %}
 
 
     private def default_headers

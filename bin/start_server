@@ -4,7 +4,7 @@ echo "Building ./bin/server.cr ..."
 crystal build ./bin/server.cr -o ./tmp/server
 
 echo "Starting the test server..."
-./tmp/server -p 3999 &> ./tmp/server.log &
+./tmp/server -p 3999 > ./tmp/server.log &
 SERVER_PID=$!
 
 sleep 0.1
