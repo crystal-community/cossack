@@ -55,7 +55,7 @@ module Cossack
       {% end %}
     end
 
-    define_get_like_http_methods [get, delete]
+    define_get_like_http_methods [get, delete, head, options]
 
 
     macro define_post_like_http_methods(names)

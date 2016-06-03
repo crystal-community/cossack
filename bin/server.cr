@@ -26,25 +26,18 @@ post "/http/body" do |env|
   env.request.body
 end
 
-put "/http/reflect" do |env|
-  env.response.headers["REQUEST-METHOD"] = "PUT"
-  env.response.headers["REQUEST-BODY"] = env.request.body.to_s
-  env.response.headers["REQUEST-HEADER-X-FOO"] = env.request.headers["X-FOO"]?.to_s
-  env.request.body.to_s
+macro define_http_reflect(methods)
+  {% for method in methods %}
+    {{method}} "/http/reflect" do |env|
+      env.response.headers["REQUEST-METHOD"] = env.request.method.to_s
+      env.response.headers["REQUEST-BODY"] = env.request.body.to_s
+      env.response.headers["REQUEST-HEADER-X-FOO"] = env.request.headers["X-FOO"]?.to_s
+      env.request.body.to_s
+    end
+  {% end %}
 end
 
-patch "/http/reflect" do |env|
-  env.response.headers["REQUEST-METHOD"] = "PATCH"
-  env.response.headers["REQUEST-BODY"] = env.request.body.to_s
-  env.response.headers["REQUEST-HEADER-X-FOO"] = env.request.headers["X-FOO"]?.to_s
-  env.request.body.to_s
-end
+define_http_reflect [get, post, put, patch, delete, options]
 
-delete "/http/reflect" do |env|
-  env.response.headers["REQUEST-METHOD"] = "DELETE"
-  env.response.headers["REQUEST-BODY"] = env.request.body.to_s
-  env.response.headers["REQUEST-HEADER-X-FOO"] = env.request.headers["X-FOO"]?.to_s
-  env.request.body.to_s
-end
 
 Kemal.run

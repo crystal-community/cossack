@@ -14,8 +14,8 @@ Simple and flexible HTTP client for Crystal programming language.
   * [x] put
   * [x] patch
   * [x] delete
-  * [ ] head
-  * [ ] options
+  * [x] head
+  * [x] options
 * [ ] Implement class methods, like `Cossack.get`, `Cossack.post`, etc..
 * [ ] Swapping connections [like Hurley does](https://github.com/lostisland/hurley#connections)
 * [ ] Follow redirections

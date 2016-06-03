@@ -3,25 +3,19 @@ require "../../spec_helper"
 Spec2.describe "HEAD requests" do
   let(client) { Cossack::Client.new("http://localhost:3999") }
 
-  #describe "#delete" do
-  #  it "sends HEAD request" do
-  #    response = client.HEAD("/http/reflect", "korpo")
-  #    expect(response.headers["REQUEST-METHOD"]).to eq "DELETE"
-  #    expect(response.headers["REQUEST-BODY"]).to eq "korpo"
-  #    expect(response.body).to eq "korpo"
-  #    expect(response.status).to eq 200
-  #  end
+  describe "#head" do
+    it "sends HEAD request" do
+      response = client.head("/http/reflect")
+      expect(response.headers["REQUEST-METHOD"]).to eq "HEAD"
+      expect(response.status).to eq 200
+      expect(response.body).to eq ""
+    end
 
-  #  it "sends DELETE request without body" do
-  #    response = client.delete("/http/reflect")
-  #    expect(response.headers["REQUEST-METHOD"]).to eq "DELETE"
-  #  end
-
-  #  it "sends DELETE request with header" do
-  #    response = client.delete("/http/reflect") do |request|
-  #      request.headers["X-FOO"] = "header value"
-  #    end
-  #    expect(response.headers["REQUEST-HEADER-X-FOO"]).to eq "header value"
-  #  end
-  #end
+    it "sends HEAD request with header" do
+      response = client.head("/http/reflect") do |request|
+        request.headers["X-FOO"] = "header value"
+      end
+      expect(response.headers["REQUEST-HEADER-X-FOO"]).to eq "header value"
+    end
+  end
 end
