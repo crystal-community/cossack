@@ -2,5 +2,5 @@
 
 ./bin/stop_server
 ./bin/start_server
-crystal spec ./spec/acceptance/**
+crystal spec $(find ./spec/acceptance -name '*_spec.cr')
 ./bin/stop_server

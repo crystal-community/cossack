@@ -9,6 +9,8 @@ module Cossack
         env.response = put(env.request)
       elsif env.request.method == :patch
         env.response = patch(env.request)
+      elsif env.request.method == :delete
+        env.response = delete(env.request)
       else
         raise(Error.new("Cossack::HttpAdapter: Not supported HTTP method `#{env.request.method}`"))
       end
@@ -39,6 +41,11 @@ module Cossack
 
     def patch(request) : Response
       http_response = HTTP::Client.patch(request.uri, request.headers, request.body)
+      Response.new(http_response.status_code, http_response.headers, http_response.body)
+    end
+
+    def delete(request) : Response
+      http_response = HTTP::Client.delete(request.uri, request.headers, request.body)
       Response.new(http_response.status_code, http_response.headers, http_response.body)
     end
   end

@@ -89,6 +89,17 @@ module Cossack
       @app.call(env).response as Response
     end
 
+    def delete(url_or_path : String, body : String = "")
+      delete(url_or_path, body) { }
+    end
+
+    def delete(url_or_path : String, body : String = "")
+      uri = complete_uri!(URI.parse(url_or_path))
+      request = Request.new(:delete, uri, @headers.clone, Params.new, body)
+      yield(request)
+      env = Env.new(request)
+      @app.call(env).response as Response
+    end
 
 
     private def default_headers

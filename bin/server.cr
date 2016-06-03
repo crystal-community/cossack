@@ -29,17 +29,22 @@ end
 put "/http/reflect" do |env|
   env.response.headers["REQUEST-METHOD"] = "PUT"
   env.response.headers["REQUEST-BODY"] = env.request.body.to_s
-  env.response.headers["REQUEST-HEADER-X-FOO"] = env.request.headers["X-FOO"]
+  env.response.headers["REQUEST-HEADER-X-FOO"] = env.request.headers["X-FOO"]?.to_s
   env.request.body.to_s
 end
 
 patch "/http/reflect" do |env|
   env.response.headers["REQUEST-METHOD"] = "PATCH"
   env.response.headers["REQUEST-BODY"] = env.request.body.to_s
-  env.response.headers["REQUEST-HEADER-X-FOO"] = env.request.headers["X-FOO"]
+  env.response.headers["REQUEST-HEADER-X-FOO"] = env.request.headers["X-FOO"]?.to_s
   env.request.body.to_s
 end
 
-
+delete "/http/reflect" do |env|
+  env.response.headers["REQUEST-METHOD"] = "DELETE"
+  env.response.headers["REQUEST-BODY"] = env.request.body.to_s
+  env.response.headers["REQUEST-HEADER-X-FOO"] = env.request.headers["X-FOO"]?.to_s
+  env.request.body.to_s
+end
 
 Kemal.run
