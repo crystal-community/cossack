@@ -45,9 +45,22 @@ module Cossack
           {{method}}(url_or_path, params) { }
         end
 
-        def {{method}}(url_or_path : String, params : Params = Params.new) : Response
+        def {{method}}(url_or_path : String, params : Params|Nil = nil) : Response
           uri = complete_uri!(URI.parse(url_or_path))
-          request = Request.new(:{{method}}, uri, @headers.clone, params)
+
+          if params
+            query = HTTP::Params.build do |form|
+              (params as Params).each { |name, val| form.add(name, val) }
+            end
+
+            if uri.query
+              uri
+            else
+              uri.query = query
+            end
+          end
+
+          request = Request.new(:{{method}}, uri, @headers.clone)
           yield(request)
           env = Env.new(request)
           @app.call(env).response as Response
@@ -66,7 +79,7 @@ module Cossack
 
         def {{name}}(url_or_path : String, body : String = "")
           uri = complete_uri!(URI.parse(url_or_path))
-          request = Request.new(:{{name}}, uri, @headers.clone, Params.new, body)
+          request = Request.new(:{{name}}, uri, @headers.clone, body)
           yield(request)
           env = Env.new(request)
           @app.call(env).response as Response
