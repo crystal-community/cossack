@@ -40,21 +40,54 @@ module Cossack
     end
 
     def get(url_or_path : String, params : Params = Params.new) : Response
-      uri = complete_uri!(URI.parse(url_or_path))
-      request = Request.new(:get, uri, @headers.clone, params)
-      env = Env.new(request)
-      @app.call(env).response as Response
+      get(url_or_path, params) { }
     end
 
-    # Overload with block
     def get(url_or_path : String, params : Params = Params.new) : Response
       uri = complete_uri!(URI.parse(url_or_path))
-      request = Request.new(:get, uri, default_headers, params)
+      request = Request.new(:get, uri, @headers.clone, params)
       yield(request)
       env = Env.new(request)
       @app.call(env).response as Response
     end
 
+
+    def post(url_or_path : String, body : String = "")
+      post(url_or_path, body) { }
+    end
+
+    def post(url_or_path : String, body : String = "")
+      uri = complete_uri!(URI.parse(url_or_path))
+      request = Request.new(:post, uri, @headers.clone, Params.new, body)
+      yield(request)
+      env = Env.new(request)
+      @app.call(env).response as Response
+    end
+
+
+    def put(url_or_path : String, body : String = "")
+      put(url_or_path, body) { }
+    end
+
+    def put(url_or_path : String, body : String = "")
+      uri = complete_uri!(URI.parse(url_or_path))
+      request = Request.new(:put, uri, @headers.clone, Params.new, body)
+      yield(request)
+      env = Env.new(request)
+      @app.call(env).response as Response
+    end
+
+    def patch(url_or_path : String, body : String = "")
+      patch(url_or_path, body) { }
+    end
+
+    def patch(url_or_path : String, body : String = "")
+      uri = complete_uri!(URI.parse(url_or_path))
+      request = Request.new(:patch, uri, @headers.clone, Params.new, body)
+      yield(request)
+      env = Env.new(request)
+      @app.call(env).response as Response
+    end
 
 
 
