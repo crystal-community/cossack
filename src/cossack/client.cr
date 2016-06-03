@@ -33,7 +33,6 @@ module Cossack
       end
     end
 
-
     def add_middleware(md : Middleware)
       md.app = @app
       @app = md
@@ -43,6 +42,7 @@ module Cossack
       def {{method.id}}(url_or_path : String, params : Params = Params.new) : Response
         {{method.id}}(url_or_path, params) { }
       end
+
 
       def {{method.id}}(url_or_path : String, params : Params|Nil = nil) : Response
         uri = complete_uri!(URI.parse(url_or_path))
