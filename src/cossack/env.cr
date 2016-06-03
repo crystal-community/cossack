@@ -1,11 +1,11 @@
 module Cossack
   class Env
     @request : Request
-    @response : Response?
+    @response : Response
 
     property :request, :response
 
-    def initialize(@request : Request)
+    def initialize(@request : Request, @response : Response = Response.null_response)
     end
   end
 end
