@@ -29,24 +29,15 @@ module Cossack
       Response.new(http_response.status_code, http_response.headers, http_response.body)
     end
 
-    def post(request) : Response
-      http_response = HTTP::Client.post(request.uri, request.headers, request.body)
-      Response.new(http_response.status_code, http_response.headers, http_response.body)
+    macro define_http_methods(names)
+      {% for name, index in names %}
+        def {{name}}(request) : Response
+          http_response = HTTP::Client.{{name}}(request.uri, request.headers, request.body)
+          Response.new(http_response.status_code, http_response.headers, http_response.body)
+        end
+      {% end %}
     end
 
-    def put(request) : Response
-      http_response = HTTP::Client.put(request.uri, request.headers, request.body)
-      Response.new(http_response.status_code, http_response.headers, http_response.body)
-    end
-
-    def patch(request) : Response
-      http_response = HTTP::Client.patch(request.uri, request.headers, request.body)
-      Response.new(http_response.status_code, http_response.headers, http_response.body)
-    end
-
-    def delete(request) : Response
-      http_response = HTTP::Client.delete(request.uri, request.headers, request.body)
-      Response.new(http_response.status_code, http_response.headers, http_response.body)
-    end
+    define_http_methods [post, put, delete, patch]
   end
 end

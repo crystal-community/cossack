@@ -5,14 +5,6 @@ Spec2.describe "DELETE requests" do
 
   describe "#delete" do
     it "sends DELETE request" do
-      response = client.delete("/http/reflect", "korpo")
-      expect(response.headers["REQUEST-METHOD"]).to eq "DELETE"
-      expect(response.headers["REQUEST-BODY"]).to eq "korpo"
-      expect(response.body).to eq "korpo"
-      expect(response.status).to eq 200
-    end
-
-    it "sends DELETE request without body" do
       response = client.delete("/http/reflect")
       expect(response.headers["REQUEST-METHOD"]).to eq "DELETE"
     end

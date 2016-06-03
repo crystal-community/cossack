@@ -39,67 +39,43 @@ module Cossack
       @app = md
     end
 
-    def get(url_or_path : String, params : Params = Params.new) : Response
-      get(url_or_path, params) { }
+    macro define_get_like_http_methods(methods)
+      {% for method in methods %}
+        def {{method}}(url_or_path : String, params : Params = Params.new) : Response
+          {{method}}(url_or_path, params) { }
+        end
+
+        def {{method}}(url_or_path : String, params : Params = Params.new) : Response
+          uri = complete_uri!(URI.parse(url_or_path))
+          request = Request.new(:{{method}}, uri, @headers.clone, params)
+          yield(request)
+          env = Env.new(request)
+          @app.call(env).response as Response
+        end
+      {% end %}
     end
 
-    def get(url_or_path : String, params : Params = Params.new) : Response
-      uri = complete_uri!(URI.parse(url_or_path))
-      request = Request.new(:get, uri, @headers.clone, params)
-      yield(request)
-      env = Env.new(request)
-      @app.call(env).response as Response
+    define_get_like_http_methods [get, delete]
+
+
+    macro define_post_like_http_methods(names)
+      {% for name, index in names %}
+        def {{name}}(url_or_path : String, body : String = "")
+          {{name}}(url_or_path, body) { }
+        end
+
+        def {{name}}(url_or_path : String, body : String = "")
+          uri = complete_uri!(URI.parse(url_or_path))
+          request = Request.new(:{{name}}, uri, @headers.clone, Params.new, body)
+          yield(request)
+          env = Env.new(request)
+          @app.call(env).response as Response
+        end
+      {% end %}
     end
 
+    define_post_like_http_methods [post, put, patch]
 
-    def post(url_or_path : String, body : String = "")
-      post(url_or_path, body) { }
-    end
-
-    def post(url_or_path : String, body : String = "")
-      uri = complete_uri!(URI.parse(url_or_path))
-      request = Request.new(:post, uri, @headers.clone, Params.new, body)
-      yield(request)
-      env = Env.new(request)
-      @app.call(env).response as Response
-    end
-
-
-    def put(url_or_path : String, body : String = "")
-      put(url_or_path, body) { }
-    end
-
-    def put(url_or_path : String, body : String = "")
-      uri = complete_uri!(URI.parse(url_or_path))
-      request = Request.new(:put, uri, @headers.clone, Params.new, body)
-      yield(request)
-      env = Env.new(request)
-      @app.call(env).response as Response
-    end
-
-    def patch(url_or_path : String, body : String = "")
-      patch(url_or_path, body) { }
-    end
-
-    def patch(url_or_path : String, body : String = "")
-      uri = complete_uri!(URI.parse(url_or_path))
-      request = Request.new(:patch, uri, @headers.clone, Params.new, body)
-      yield(request)
-      env = Env.new(request)
-      @app.call(env).response as Response
-    end
-
-    def delete(url_or_path : String, body : String = "")
-      delete(url_or_path, body) { }
-    end
-
-    def delete(url_or_path : String, body : String = "")
-      uri = complete_uri!(URI.parse(url_or_path))
-      request = Request.new(:delete, uri, @headers.clone, Params.new, body)
-      yield(request)
-      env = Env.new(request)
-      @app.call(env).response as Response
-    end
 
 
     private def default_headers
