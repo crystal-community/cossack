@@ -4,13 +4,15 @@ module Cossack
 
     @base_uri : URI
     @headers : HTTP::Headers
-    @app : HttpAdapter|Middleware
+    @app : Middleware
 
     getter :base_uri, :headers
 
     def initialize(base_url = nil)
       @headers = default_headers
-      @app = HttpAdapter.new
+
+      @connection = HttpConnection.new
+      @app = ConnectionMiddleware.new(@connection)
 
       if base_url
         @base_uri = URI.parse(base_url)
@@ -21,22 +23,19 @@ module Cossack
       yield self
     end
 
-    # With block given...
+    # When block is not given.
     def initialize(base_url = nil)
-      @headers = default_headers
-      @app = HttpAdapter.new
-
-      if base_url
-        @base_uri = URI.parse(base_url)
-      else
-        @base_uri = URI.new
-      end
+      initialize(base_url) { }
     end
 
     def add_middleware(md : Middleware)
       md.app = @app
       @app = md
     end
+
+    #def connection=(conn : Proc(Request, Response))
+    #  @app = conn
+    #end
 
     {% for method in %w(get delete head options) %}
       def {{method.id}}(url_or_path : String, params : Params = Params.new) : Response
