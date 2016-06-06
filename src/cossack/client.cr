@@ -11,8 +11,8 @@ module Cossack
     def initialize(base_url = nil)
       @headers = default_headers
 
-      @connection = HttpConnection.new
-      @app = ConnectionMiddleware.new(@connection)
+      @connection_middleware = ConnectionMiddleware.new(HttpConnection.new)
+      @app = @connection_middleware
 
       if base_url
         @base_uri = URI.parse(base_url)
@@ -33,9 +33,13 @@ module Cossack
       @app = md
     end
 
-    #def connection=(conn : Proc(Request, Response))
-    #  @app = conn
-    #end
+    def connection=(connection : Proc(Request, Response)|Connection)
+      @connection_middleware.connection = connection
+    end
+
+    def connection
+      @connection_middleware.connection
+    end
 
     {% for method in %w(get delete head options) %}
       def {{method.id}}(url_or_path : String, params : Params = Params.new) : Response
