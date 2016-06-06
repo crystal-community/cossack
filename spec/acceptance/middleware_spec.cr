@@ -24,7 +24,7 @@ describe "Middleware usage" do
   it "allows to register middleware" do
     responses = [] of String
 
-    client = Cossack::Client.new("http://localhost:3999/") do |client|
+    client = Cossack::Client.new(TEST_SERVER_URL) do |client|
       client.add_middleware TestMiddlwareWriter.new(responses)
       client.add_middleware TestMiddlewareNull.new
     end
@@ -34,5 +34,31 @@ describe "Middleware usage" do
 
     client.get("/math/add", {"a" => "4", "b" => "5"})
     responses.should eq ["root", "9"]
+  end
+
+  it "works with swapped connection" do
+    responses = [] of String
+
+    client = Cossack::Client.new(TEST_SERVER_URL) do |client|
+      client.add_middleware TestMiddlwareWriter.new(responses)
+      client.connection = -> (req : Cossack::Request) do
+        Cossack::Response.new(201, HTTP::Headers.new, "hello")
+      end
+      client.get("/")
+      responses.should eq ["hello"]
+    end
+  end
+
+  it "works with swapped connection passed as proc" do
+    responses = [] of String
+
+    client = Cossack::Client.new(TEST_SERVER_URL) do |client|
+      client.add_middleware TestMiddlwareWriter.new(responses)
+      client.set_connection do |req|
+        Cossack::Response.new(201, HTTP::Headers.new, "hello")
+      end
+      client.get("/")
+      responses.should eq ["hello"]
+    end
   end
 end

@@ -37,6 +37,10 @@ module Cossack
       @connection_middleware.connection = connection
     end
 
+    def set_connection(&block : Request -> Response)
+      @connection_middleware.connection = block
+    end
+
     def connection
       @connection_middleware.connection
     end
