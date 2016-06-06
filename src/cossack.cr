@@ -8,17 +8,15 @@ module Cossack
 
   class Error < Exception; end
 
-  {% for method in %w(get post put) %}
+  @@default_client = Client.new
+
+  {% for method in %w(get post put patch delete head options) %}
     def self.{{method.id}}(*args)
-      default_client.{{method.id}}(*args)
+      @@default_client.{{method.id}}(*args)
     end
 
     def self.{{method.id}}(*args, &block : Request -> _)
-      default_client.{{method.id}}(*args, &block)
+      @@default_client.{{method.id}}(*args, &block)
     end
   {% end %}
-
-  def self.default_client
-    @@default_client ||= Client.new
-  end
 end

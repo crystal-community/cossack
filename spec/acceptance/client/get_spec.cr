@@ -26,6 +26,7 @@ Spec2.describe "GET requests" do
       response = Cossack.get("#{TEST_SERVER_URL}/http/reflect") do |request|
         request.headers["CUSTOM"] = "fun"
       end
+      expect(response.headers["REQUEST-METHOD"]).to eq "GET"
       expect(response.headers["REQUEST-HEADER-CUSTOM"]).to eq "fun"
     end
   end

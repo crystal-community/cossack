@@ -17,4 +17,20 @@ Spec2.describe "OPTIONS requests" do
       expect(response.headers["REQUEST-HEADER-X-FOO"]).to eq "header value"
     end
   end
+
+  context "using module method" do
+    it "sends OPTIONS" do
+      response = Cossack.options("#{TEST_SERVER_URL}/http/reflect")
+      expect(response.status).to eq 200
+      expect(response.headers["REQUEST-METHOD"]).to eq "OPTIONS"
+    end
+
+    it "sends HEAD with custom headers" do
+      response = Cossack.options("#{TEST_SERVER_URL}/http/reflect") do |request|
+        request.headers["CUSTOM"] = "fun"
+      end
+      expect(response.headers["REQUEST-HEADER-CUSTOM"]).to eq "fun"
+      expect(response.headers["REQUEST-METHOD"]).to eq "OPTIONS"
+    end
+  end
 end

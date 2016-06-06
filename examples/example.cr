@@ -10,7 +10,7 @@ class DurationLogger < Cossack::Middleware
 
     duration = (Time.now - start_time).to_f
     print "DurationLogger".colorize.green
-    puts " [#{duration.colorize.blue}] #{env.request.url}"
+    puts " [#{duration.colorize.blue}] #{env.request.uri.to_s}"
 
     env
   end
@@ -23,12 +23,12 @@ class Cache < Cossack::Middleware
   end
 
   def call(env)
-    url = env.request.url
+    url = env.request.uri.to_s
     if @cache[url]?
       env.response = @cache[url]
     else
       @app.call(env)
-      @cache[url] = env.response as Cossack::Response
+      @cache[url] = env.response
     end
 
     env
@@ -36,14 +36,23 @@ class Cache < Cossack::Middleware
 end
 
 cossack = Cossack::Client.new do |client|
-  client.add_middleware Cache.new
   client.add_middleware DurationLogger.new
+  client.add_middleware Cache.new
 end
 
 
-3.times do
+2.times do
   response = cossack.get("http://jsonplaceholder.typicode.com/posts", {"postId" => "1"})
-  pp response.status
-  puts response.body[0..100].gsub("\n", " ").gsub(/\s+/, " ")
-  puts
+  #pp response.status
+  #puts response.body[0..100].gsub("\n", " ").gsub(/\s+/, " ")
+  #puts
 end
+
+
+start = Time.new
+
+1000_000.times do
+  cossack.get("http://jsonplaceholder.typicode.com/posts", {"postId" => "1"})
+end
+
+puts Time.new - start

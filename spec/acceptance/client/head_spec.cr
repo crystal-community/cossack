@@ -18,4 +18,20 @@ Spec2.describe "HEAD requests" do
       expect(response.headers["REQUEST-HEADER-X-FOO"]).to eq "header value"
     end
   end
+
+  context "using module method" do
+    it "sends HEAD" do
+      response = Cossack.head("#{TEST_SERVER_URL}/http/reflect")
+      expect(response.status).to eq 200
+      expect(response.headers["REQUEST-METHOD"]).to eq "HEAD"
+    end
+
+    it "sends HEAD with custom headers" do
+      response = Cossack.head("#{TEST_SERVER_URL}/http/reflect") do |request|
+        request.headers["CUSTOM"] = "fun"
+      end
+      expect(response.headers["REQUEST-HEADER-CUSTOM"]).to eq "fun"
+      expect(response.headers["REQUEST-METHOD"]).to eq "HEAD"
+    end
+  end
 end

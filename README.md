@@ -8,7 +8,7 @@ Simple and flexible HTTP client for Crystal programming language.
 * [x] Allow `Client` be initialized with base `url`
 * [x] support headers for individual request
 * [x] support headers for Client
-* [ ] Support of all HTTP verbs
+* [x] Support of all HTTP verbs
   * [x] get
   * [x] post
   * [x] put
@@ -16,15 +16,17 @@ Simple and flexible HTTP client for Crystal programming language.
   * [x] delete
   * [x] head
   * [x] options
-* [ ] Implement class methods, like `Cossack.get`, `Cossack.post`, etc..
+* [x] Implement class methods, like `Cossack.get`, `Cossack.post`, etc..
 * [ ] Swapping connections [like Hurley does](https://github.com/lostisland/hurley#connections)
-* [ ] Follow redirections
-* [ ] SSL
-* [ ] Examples
 * [ ] Timeout
-* [ ] Proxy
-* [ ] Proper unit tests for what's already written
+* [ ] Follow redirections
+* [ ] Examples
+* [ ] Unit tests
+* [x] Acceptance tests
 * [ ] Good documentation, describing the concept and usage.
+* [ ] First release!
+* [ ] SSL
+* [ ] Proxy
 
 ## Installation
 
