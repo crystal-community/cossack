@@ -66,7 +66,7 @@ module Cossack
           end
         end
 
-        request = Request.new(:{{method.id}}, uri, @headers.clone)
+        request = Request.new("{{method.id.upcase}}", uri, @headers.clone)
         yield(request)
         env = Env.new(request)
         @app.call(env).response as Response
@@ -81,7 +81,7 @@ module Cossack
 
       def {{method.id}}(url_or_path : String, body : String = "")
         uri = complete_uri!(URI.parse(url_or_path))
-        request = Request.new(:{{method.id}}, uri, @headers.clone, body)
+        request = Request.new("{{method.id.upcase}}", uri, @headers.clone, body)
         yield(request)
         env = Env.new(request)
         @app.call(env).response as Response
