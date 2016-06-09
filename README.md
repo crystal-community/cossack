@@ -25,6 +25,7 @@ Simple and flexible HTTP client for Crystal programming language.
 * [ ] Additional sugar
   * [ ] Pass headers to Response.new and Request.new as Hash(String, String)
   * [ ] Add `:headers` argument to http methods
+  * [ ] status methods for response (success?, redirect?, etc..)
 * [x] Acceptance tests
 * [ ] Good documentation, describing the concept and usage.
 * [ ] First release!
