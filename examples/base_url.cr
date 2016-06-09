@@ -1,7 +1,7 @@
 require "../src/cossack"
 
 # Schema and host in base URL
-cossack = Cossack::Client.new("http://jsonplaceholder.typicode.com")
+cossack = Cossack::Client.new("http://jsonplaceholder.typicode.com", connect_timeout: 0.2)
 response = cossack.get("/posts", {"postId" => "1"})
 pp response.status
 puts response.body[0..100].gsub("\n", " ").gsub(/\s+/, " ")
@@ -14,3 +14,4 @@ response = cossack.get("/comments")
 pp response.status
 puts response.body[0..100].gsub("\n", " ").gsub(/\s+/, " ")
 puts
+

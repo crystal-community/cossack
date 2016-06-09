@@ -7,6 +7,7 @@ module Cossack
   alias Params = Hash(String, String)
 
   class Error < Exception; end
+  class TimeoutError < Error; end
 
   @@default_client = Client.new
 

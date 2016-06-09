@@ -25,4 +25,10 @@ end
   end
 {% end %}
 
+get "/delay/:delay" do |env|
+  delay = env.params.url["delay"].to_f
+  sleep delay
+  delay.to_s
+end
+
 Kemal.run

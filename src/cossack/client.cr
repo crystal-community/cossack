@@ -2,16 +2,19 @@ module Cossack
   class Client
     USER_AGENT = "Cossack v#{VERSION}"
 
+    DEFAULT_TIMEOUT = 30.0
+
     @base_uri : URI
     @headers : HTTP::Headers
     @app : Middleware
 
     getter :base_uri, :headers
 
-    def initialize(base_url = nil)
+    def initialize(base_url = nil, @connect_timeout : Float64|Int32 = DEFAULT_TIMEOUT, @read_timeout : Float64|Int32 = DEFAULT_TIMEOUT)
       @headers = default_headers
 
-      @connection_middleware = ConnectionMiddleware.new(HttpConnection.new)
+      @http_connection = HttpConnection.new(connect_timeout: @connect_timeout.to_f, read_timeout: @read_timeout.to_f)
+      @connection_middleware = ConnectionMiddleware.new(@http_connection)
       @app = @connection_middleware
 
       if base_url
@@ -24,8 +27,8 @@ module Cossack
     end
 
     # When block is not given.
-    def initialize(base_url = nil)
-      initialize(base_url) { }
+    def initialize(base_url = nil, @connect_timeout : Float64|Int32 = DEFAULT_TIMEOUT, @read_timeout : Float64|Int32 = DEFAULT_TIMEOUT)
+      initialize(base_url, @connect_timeout, @read_timeout) { }
     end
 
     def add_middleware(md : Middleware)
