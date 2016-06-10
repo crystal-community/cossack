@@ -3,16 +3,16 @@ require "../src/cossack"
 require "colorize"
 
 class DurationLogger < Cossack::Middleware
-  def call(env : Cossack::Env) : Cossack::Env
+  def call(request)
     start_time = Time.now
 
-    @app.call(env)
+    response = @app.call(request)
 
     duration = (Time.now - start_time).to_f
     print "DurationLogger".colorize.green
-    puts " [#{duration.colorize.blue}] #{env.request.uri.to_s}"
+    puts " [#{duration.colorize.blue}] #{request.uri.to_s}"
 
-    env
+    response
   end
 end
 
@@ -22,16 +22,15 @@ class Cache < Cossack::Middleware
     @cache = {} of String => Cossack::Response
   end
 
-  def call(env)
-    url = env.request.uri.to_s
+  def call(request)
+    url = request.uri.to_s
     if @cache[url]?
-      env.response = @cache[url]
+      @cache[url]
     else
-      @app.call(env)
-      @cache[url] = env.response
+      @app.call(request).tap do |response|
+        @cache[url] = response
+      end
     end
-
-    env
   end
 end
 
@@ -51,7 +50,7 @@ end
 
 start = Time.new
 
-1000_000.times do
+10.times do
   cossack.get("http://jsonplaceholder.typicode.com/posts", {"postId" => "1"})
 end
 

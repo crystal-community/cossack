@@ -6,17 +6,17 @@ class TestMiddlwareWriter < Cossack::Middleware
     super()
   end
 
-  def call(env)
-    app.call(env)
-    @responses << (env.response as Cossack::Response).body
-    env
+  def call(request)
+    app.call(request).tap do |response|
+      @responses << response.body
+    end
   end
 end
 
 # Does nothing
 class TestMiddlewareNull < Cossack::Middleware
-  def call(env)
-    app.call(env)
+  def call(request)
+    app.call(request)
   end
 end
 

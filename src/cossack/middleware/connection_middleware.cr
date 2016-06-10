@@ -10,11 +10,8 @@ module Cossack
       super()
     end
 
-    def call(env : Env) : Env
-      request = env.request
-      response = @connection.call(request)
-      env.response = response
-      env
+    def call(request) : Response
+      @connection.call(request)
     end
   end
 end

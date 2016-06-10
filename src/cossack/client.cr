@@ -71,8 +71,7 @@ module Cossack
 
         request = Request.new("{{method.id.upcase}}", uri, @headers.clone)
         yield(request)
-        env = Env.new(request)
-        @app.call(env).response as Response
+        @app.call(request)
       end
     {% end %}
 
@@ -86,8 +85,7 @@ module Cossack
         uri = complete_uri!(URI.parse(url_or_path))
         request = Request.new("{{method.id.upcase}}", uri, @headers.clone, body)
         yield(request)
-        env = Env.new(request)
-        @app.call(env).response as Response
+        @app.call(request)
       end
     {% end %}
 

@@ -1,16 +1,16 @@
 require "../src/cossack"
 
 class DurationLogger < Cossack::Middleware
-  def call(env : Cossack::Env) : Cossack::Env
+  def call(request)
     start_time = Time.now
 
-    @app.call(env)
+    response = @app.call(request)
 
     duration = (Time.now - start_time).to_f
     print "DurationLogger"
-    puts " [#{duration}] #{env.request.uri.to_s}"
+    puts " [#{duration}] #{request.uri.to_s}"
 
-    env
+    response
   end
 end
 

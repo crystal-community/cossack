@@ -8,6 +8,7 @@ module Cossack
       @app = NullMiddleware.new
     end
 
-    abstract def call(env : Env) : Env
+    #abstract def call(env : Env) : Env
+    abstract def call(request : Request) : Response
   end
 end
