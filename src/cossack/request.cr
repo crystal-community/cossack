@@ -7,7 +7,7 @@ module Cossack
 
     property :method, :uri, :params, :headers, :body
 
-    def initialize(@method : String, @uri : URI, @headers : HTTP::Headers, @body : String|Nil = nil)
+    def initialize(@method : String, @uri : URI, @headers : HTTP::Headers, @body : String? = nil)
     end
   end
 end

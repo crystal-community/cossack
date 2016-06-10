@@ -19,12 +19,12 @@ Simple and flexible HTTP client for Crystal programming language.
 * [x] Implement class methods, like `Cossack.get`, `Cossack.post`, etc..
 * [x] Swapping connections [like Hurley does](https://github.com/lostisland/hurley#connections)
 * [x] Timeout
+* [ ] Unit tests
 * [ ] Beta test of API
   * [ ] Update GoogleTranslate client to use Cossack
-  * [ ] Update Glosbe client to use Cossack
+  * [x] Update Glosbe client to use Cossack
 * [ ] Follow redirections
 * [ ] Examples
-* [ ] Unit tests
 * [ ] Additional sugar
   * [ ] Pass headers to Response.new and Request.new as Hash(String, String)
   * [ ] Add `:headers` argument to http methods
