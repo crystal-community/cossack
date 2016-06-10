@@ -36,8 +36,8 @@ module Cossack
       @app = md
     end
 
-    def connection=(connection : Proc(Request, Response)|Connection)
-      @connection_middleware.connection = connection
+    def connection=(conn : Proc(Request, Response)|Connection)
+      @connection_middleware.connection = conn
     end
 
     def set_connection(&block : Request -> Response)
