@@ -49,6 +49,10 @@ module Cossack
       @connection
     end
 
+    def call(request : Request) : Response
+      @app.call(request)
+    end
+
     {% for method in %w(get delete head options) %}
       def {{method.id}}(url_or_path : String, params : Params = Params.new) : Response
         {{method.id}}(url_or_path, params) { }
@@ -72,7 +76,7 @@ module Cossack
 
         request = Request.new("{{method.id.upcase}}", uri, @headers.clone, options: @request_options.clone)
         yield(request)
-        @app.call(request)
+        call(request)
       end
     {% end %}
 
@@ -86,7 +90,7 @@ module Cossack
         uri = complete_uri!(URI.parse(url_or_path))
         request = Request.new("{{method.id.upcase}}", uri, @headers.clone, body, @request_options.clone)
         yield(request)
-        @app.call(request)
+        call(request)
       end
     {% end %}
 
