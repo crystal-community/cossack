@@ -18,7 +18,6 @@ module Cossack
       @base_uri = base_url ? URI.parse(base_url) : URI.new
       @middlewares = [] of Middleware
 
-
       yield self
     end
 
