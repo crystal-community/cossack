@@ -34,7 +34,7 @@ module Cossack
       if @middlewares.first
         @middlewares.first.__set_app__(@connection)
       else
-        @app = conn
+        @app = @connection
       end
     end
 
@@ -43,7 +43,7 @@ module Cossack
       if @middlewares.first
         @middlewares.first.__set_app__(@connection)
       else
-        @app = conn
+        @app = @connection
       end
     end
 
