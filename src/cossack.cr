@@ -8,6 +8,7 @@ module Cossack
 
   class Error < Exception; end
   class TimeoutError < Error; end
+  class MockError < Error; end
 
   @@default_client = Client.new
 

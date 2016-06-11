@@ -21,11 +21,11 @@ Simple and flexible HTTP client for Crystal programming language.
 * [x] Timeout
 * [x] Move `connect_timeout` and `read_timeout` opts to Request object. Introduce RequestOptions.
 * [x] Extract Client#call method
-* [ ] Implement TestConnection
+* [x] Implement TestConnection (ConnectionMock)
 * [ ] Try to separate request builders from #get, #post, etc., methods.
-* [ ] Add methods to Response: redirection?, client_error?, server_error?
 * [ ] Rename Connection -> Handler ?
 * [x] Unit tests
+* [ ] Rename HttpConnection -> HTTPConnection (it's Crystal convention)
 * [ ] Beta test of API
   * [ ] Update GoogleTranslate client to use Cossack
   * [x] Update Glosbe client to use Cossack
@@ -34,7 +34,7 @@ Simple and flexible HTTP client for Crystal programming language.
 * [ ] Additional sugar
   * [x] Pass headers to Response.new and Request.new as Hash(String, String)
   * [ ] Add `:headers` argument to http methods
-  * [x] status methods for response success?
+  * [ ] Add methods to Response: redirection?, client_error?, server_error?
 * [x] Acceptance tests
 * [ ] Good documentation, describing the concept and usage.
   * [ ] Docs for code base

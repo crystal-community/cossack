@@ -1,13 +1,14 @@
 require "../../../spec_helper"
 
-Spec2.describe Cossack::StubConnection::RequestMatcher do
+Spec2.describe Cossack::ConnectionMock::RequestMatcher do
   let(request_headers) { HTTP::Headers.new.tap { |h| h["User-Agent"] = "Cossack" } }
   let(request) { Cossack::Request.new("POST", URI.parse("https://esperanto.org/vortaro/vivo?to=en"), request_headers, "The love") }
 
-  let(matcher) { Cossack::StubConnection::RequestMatcher.new(method, url, headers) }
+  let(matcher) { Cossack::ConnectionMock::RequestMatcher.new(method, url, headers, body) }
   let(method) { nil }
   let(url) { nil}
   let(headers) { {} of String => String }
+  let(body) { nil }
 
   describe "#matches?" do
     subject { matcher.matches?(request) }
@@ -67,6 +68,18 @@ Spec2.describe Cossack::StubConnection::RequestMatcher do
               context "when all headers match" do
                 let(headers) { { "User-Agent" => "Cossack" } }
                 it "returns true" { expect(subject).to eq true }
+
+                context "when body is specified" do
+                  context "when body does not match" do
+                    let(body) { "The hate" }
+                    it "returns false" { expect(subject).to eq false }
+                  end
+
+                  context "when body matches" do
+                    let(body) { "The love" }
+                    it "returns true" { expect(subject).to eq true}
+                  end
+                end
               end
             end
           end
