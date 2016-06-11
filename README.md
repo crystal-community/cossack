@@ -20,7 +20,7 @@ Simple and flexible HTTP client for Crystal programming language.
 * [x] Swapping connections [like Hurley does](https://github.com/lostisland/hurley#connections)
 * [x] Timeout
 * [x] Move `connect_timeout` and `read_timeout` opts to Request object. Introduce RequestOptions.
-* [ ] Extract Client#call method
+* [x] Extract Client#call method
 * [ ] Implement TestConnection
 * [ ] Try to separate request builders from #get, #post, etc., methods.
 * [ ] Add methods to Response: redirection?, client_error?, server_error?

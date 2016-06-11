@@ -2,8 +2,6 @@ module Cossack
   class Client
     USER_AGENT = "Cossack v#{VERSION}"
 
-    DEFAULT_TIMEOUT = 30.0
-
     @base_uri : URI
     @headers : HTTP::Headers
     @app : Middleware|Connection|Proc(Request, Response)
@@ -35,6 +33,8 @@ module Cossack
       @connection = conn
       if @middlewares.first
         @middlewares.first.__set_app__(@connection)
+      else
+        @app = conn
       end
     end
 
@@ -42,6 +42,8 @@ module Cossack
       @connection = block
       if @middlewares.first
         @middlewares.first.__set_app__(@connection)
+      else
+        @app = conn
       end
     end
 
