@@ -1,5 +1,5 @@
 module Cossack
-  class HttpConnection < Connection
+  class HTTPConnection < Connection
     def call(request : Request) : Response
       client = HTTP::Client.new(request.uri)
       client.connect_timeout = request.options.connect_timeout

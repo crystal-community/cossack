@@ -23,9 +23,8 @@ Simple and flexible HTTP client for Crystal programming language.
 * [x] Extract Client#call method
 * [x] Implement TestConnection (ConnectionMock)
 * [ ] Try to separate request builders from #get, #post, etc., methods.
-* [ ] Rename Connection -> Handler ?
 * [x] Unit tests
-* [ ] Rename HttpConnection -> HTTPConnection (it's Crystal convention)
+* [x] Rename HttpConnection -> HTTPConnection (it's Crystal convention)
 * [ ] Beta test of API
   * [ ] Update GoogleTranslate client to use Cossack
   * [x] Update Glosbe client to use Cossack

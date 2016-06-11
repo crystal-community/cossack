@@ -11,7 +11,7 @@ module Cossack
     def initialize(base_url = nil)
       @headers = default_headers
       @request_options = RequestOptions.new
-      @connection = HttpConnection.new
+      @connection = HTTPConnection.new
       @app = @connection
       @base_uri = base_url ? URI.parse(base_url) : URI.new
       @middlewares = [] of Middleware
