@@ -37,8 +37,19 @@ Simple and flexible HTTP client for Crystal programming language.
   * [x] status methods for response success?
 * [x] Acceptance tests
 * [ ] Good documentation, describing the concept and usage.
+  * [ ] Docs for code base
+  * [ ] README docs
+    * [ ] Getting started example
+    * [ ] Basic concept: Request, Response, Client, Connection. (Middleware?)
+    * [ ] Advanced usage
+      * [ ] Middleware
+    * [ ] Testing
+    * [ ] FAQ
+      * [ ] How to send headers?
+      * [ ] How to handle basic authentication?
+* [ ] Add LGPL license
 * [ ] First release!
-* [ ] Proxy
+* [ ] Open PR to awesome-crystal
 
 ## Installation
 
