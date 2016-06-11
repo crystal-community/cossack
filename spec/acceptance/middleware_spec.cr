@@ -2,8 +2,7 @@ require "../spec_helper"
 
 # Writes response to Array @responses.
 class TestMiddlwareWriter < Cossack::Middleware
-  def initialize(@responses = [] of String)
-    super()
+  def initialize(@app, @responses = [] of String)
   end
 
   def call(request)
@@ -25,8 +24,8 @@ describe "Middleware usage" do
     responses = [] of String
 
     client = Cossack::Client.new(TEST_SERVER_URL) do |client|
-      client.add_middleware TestMiddlwareWriter.new(responses)
-      client.add_middleware TestMiddlewareNull.new
+      client.add_middleware TestMiddlwareWriter, responses
+      client.add_middleware TestMiddlewareNull
     end
 
     client.get("/")
@@ -40,7 +39,7 @@ describe "Middleware usage" do
     responses = [] of String
 
     client = Cossack::Client.new(TEST_SERVER_URL) do |client|
-      client.add_middleware TestMiddlwareWriter.new(responses)
+      client.add_middleware TestMiddlwareWriter, responses
       client.connection = -> (req : Cossack::Request) do
         Cossack::Response.new(201, HTTP::Headers.new, "hello")
       end
@@ -53,7 +52,7 @@ describe "Middleware usage" do
     responses = [] of String
 
     client = Cossack::Client.new(TEST_SERVER_URL) do |client|
-      client.add_middleware TestMiddlwareWriter.new(responses)
+      client.add_middleware TestMiddlwareWriter, responses
       client.set_connection do |req|
         Cossack::Response.new(201, HTTP::Headers.new, "hello")
       end

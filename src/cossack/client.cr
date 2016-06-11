@@ -6,22 +6,18 @@ module Cossack
 
     @base_uri : URI
     @headers : HTTP::Headers
-    @app : Middleware
+    @app : Middleware|Connection|Proc(Request, Response)
 
     getter :base_uri, :headers
 
     def initialize(base_url = nil, @connect_timeout : Float64|Int32 = DEFAULT_TIMEOUT, @read_timeout : Float64|Int32 = DEFAULT_TIMEOUT)
       @headers = default_headers
 
-      @http_connection = HttpConnection.new(connect_timeout: @connect_timeout.to_f, read_timeout: @read_timeout.to_f)
-      @connection_middleware = ConnectionMiddleware.new(@http_connection)
-      @app = @connection_middleware
+      @connection = HttpConnection.new(connect_timeout: @connect_timeout.to_f, read_timeout: @read_timeout.to_f)
+      @app = @connection
+      @base_uri = base_url ? URI.parse(base_url) : URI.new
+      @middlewares = [] of Middleware
 
-      if base_url
-        @base_uri = URI.parse(base_url)
-      else
-        @base_uri = URI.new
-      end
 
       yield self
     end
@@ -31,21 +27,27 @@ module Cossack
       initialize(base_url, @connect_timeout, @read_timeout) { }
     end
 
-    def add_middleware(md : Middleware)
-      md.app = @app
-      @app = md
+    def add_middleware(klass, *args, **nargs)
+      @middlewares << klass.new(@app, *args, **nargs)
+      @app = @middlewares.last
     end
 
     def connection=(conn : Proc(Request, Response)|Connection)
-      @connection_middleware.connection = conn
+      @connection = conn
+      if @middlewares.first
+        @middlewares.first.__set_app__(@connection)
+      end
     end
 
     def set_connection(&block : Request -> Response)
-      @connection_middleware.connection = block
+      @connection = block
+      if @middlewares.first
+        @middlewares.first.__set_app__(@connection)
+      end
     end
 
     def connection
-      @connection_middleware.connection
+      @connection
     end
 
     {% for method in %w(get delete head options) %}
