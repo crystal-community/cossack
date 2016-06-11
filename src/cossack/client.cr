@@ -31,7 +31,7 @@ module Cossack
 
     def connection=(conn : Proc(Request, Response)|Connection)
       @connection = conn
-      if @middlewares.first
+      if @middlewares.first?
         @middlewares.first.__set_app__(@connection)
       else
         @app = @connection

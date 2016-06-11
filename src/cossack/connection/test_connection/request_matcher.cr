@@ -1,5 +1,5 @@
 module Cossack
-  class ConnectionMock < Connection
+  class TestConnection < Connection
     class RequestMatcher
       def initialize(@method : String? = nil, uri : URI?|String? = nil, @headers = {} of String => String, @body : String? = nil)
         @uri = uri ? URI.parse(uri) : URI.new

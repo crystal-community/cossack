@@ -1,10 +1,10 @@
 require "../../../spec_helper"
 
-Spec2.describe Cossack::ConnectionMock::RequestMatcher do
+Spec2.describe Cossack::TestConnection::RequestMatcher do
   let(request_headers) { HTTP::Headers.new.tap { |h| h["User-Agent"] = "Cossack" } }
   let(request) { Cossack::Request.new("POST", URI.parse("https://esperanto.org/vortaro/vivo?to=en"), request_headers, "The love") }
 
-  let(matcher) { Cossack::ConnectionMock::RequestMatcher.new(method, url, headers, body) }
+  let(matcher) { Cossack::TestConnection::RequestMatcher.new(method, url, headers, body) }
   let(method) { nil }
   let(url) { nil}
   let(headers) { {} of String => String }

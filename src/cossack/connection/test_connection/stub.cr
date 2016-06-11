@@ -1,5 +1,5 @@
 module Cossack
-  class ConnectionMock < Connection
+  class TestConnection < Connection
     class Stub
       getter :request_matcher, :response
 
