@@ -19,7 +19,12 @@ Simple and flexible HTTP client for Crystal programming language.
 * [x] Implement class methods, like `Cossack.get`, `Cossack.post`, etc..
 * [x] Swapping connections [like Hurley does](https://github.com/lostisland/hurley#connections)
 * [x] Timeout
-* [ ] Rename Connection -> Handler
+* [ ] Move `connect_timeout` and `read_timeout` opts to Request object. Introduce RequestOptions.
+* [ ] Implement TestConnection
+* [ ] Extract Client#exec method
+* [ ] Try to separate request builders from #get, #post, etc., methods.
+* [ ] Add methods to Response: redirection?, client_error?, server_error?
+* [ ] Rename Connection -> Handler ?
 * [x] Unit tests
 * [ ] Beta test of API
   * [ ] Update GoogleTranslate client to use Cossack
