@@ -8,12 +8,12 @@ module Cossack
     @headers : HTTP::Headers
     @app : Middleware|Connection|Proc(Request, Response)
 
-    getter :base_uri, :headers
+    getter :base_uri, :headers, :request_options
 
-    def initialize(base_url = nil, @connect_timeout : Float64|Int32 = DEFAULT_TIMEOUT, @read_timeout : Float64|Int32 = DEFAULT_TIMEOUT)
+    def initialize(base_url = nil)
       @headers = default_headers
-
-      @connection = HttpConnection.new(connect_timeout: @connect_timeout.to_f, read_timeout: @read_timeout.to_f)
+      @request_options = RequestOptions.new
+      @connection = HttpConnection.new
       @app = @connection
       @base_uri = base_url ? URI.parse(base_url) : URI.new
       @middlewares = [] of Middleware
@@ -22,8 +22,8 @@ module Cossack
     end
 
     # When block is not given.
-    def initialize(base_url = nil, @connect_timeout : Float64|Int32 = DEFAULT_TIMEOUT, @read_timeout : Float64|Int32 = DEFAULT_TIMEOUT)
-      initialize(base_url, @connect_timeout, @read_timeout) { }
+    def initialize(base_url = nil)
+      initialize(base_url) { }
     end
 
     def add_middleware(klass, *args, **nargs)
@@ -70,7 +70,7 @@ module Cossack
           end
         end
 
-        request = Request.new("{{method.id.upcase}}", uri, @headers.clone)
+        request = Request.new("{{method.id.upcase}}", uri, @headers.clone, options: @request_options.clone)
         yield(request)
         @app.call(request)
       end
@@ -84,7 +84,7 @@ module Cossack
 
       def {{method.id}}(url_or_path : String, body : String = "")
         uri = complete_uri!(URI.parse(url_or_path))
-        request = Request.new("{{method.id.upcase}}", uri, @headers.clone, body)
+        request = Request.new("{{method.id.upcase}}", uri, @headers.clone, body, @request_options.clone)
         yield(request)
         @app.call(request)
       end
