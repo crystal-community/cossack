@@ -56,19 +56,17 @@ module Cossack
     end
 
     {% for method in %w(get delete head options) %}
-      def {{method.id}}(url_or_path : String, params : Params = Params.new) : Response
-        {{method.id}}(url_or_path, params) { }
+      def {{method.id}}(url : String, params : Params? = nil) : Response
+        {{method.id}}(url, params) { }
       end
 
-
-      def {{method.id}}(url_or_path : String, params : Params|Nil = nil) : Response
-        uri = complete_uri!(URI.parse(url_or_path))
+      def {{method.id}}(url : String, params : Params? = nil) : Response
+        uri = complete_uri!(URI.parse(url))
 
         if params
           query = HTTP::Params.build do |form|
             (params as Params).each { |name, val| form.add(name, val) }
           end
-
           if uri.query
             uri.query = [uri.query, query].join("&")
           else
@@ -84,12 +82,12 @@ module Cossack
 
 
     {% for method in %w(post put patch) %}
-      def {{method.id}}(url_or_path : String, body : String = "")
-        {{method.id}}(url_or_path, body) { }
+      def {{method.id}}(url : String, body : String = "")
+        {{method.id}}(url, body) { }
       end
 
-      def {{method.id}}(url_or_path : String, body : String = "")
-        uri = complete_uri!(URI.parse(url_or_path))
+      def {{method.id}}(url : String, body : String = "")
+        uri = complete_uri!(URI.parse(url))
         request = Request.new("{{method.id.upcase}}", uri, @headers.clone, body, @request_options.clone)
         yield(request)
         call(request)

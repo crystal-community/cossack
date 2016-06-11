@@ -22,19 +22,22 @@ Simple and flexible HTTP client for Crystal programming language.
 * [x] Move `connect_timeout` and `read_timeout` opts to Request object. Introduce RequestOptions.
 * [x] Extract Client#call method
 * [x] Implement TestConnection (ConnectionMock)
-* [ ] Try to separate request builders from #get, #post, etc., methods.
 * [x] Unit tests
 * [x] Rename HttpConnection -> HTTPConnection (it's Crystal convention)
-* [ ] Beta test of API
-  * [ ] Update GoogleTranslate client to use Cossack
+* [x] Beta test of API
+  * [x] Update GoogleTranslate client to use Cossack
   * [x] Update Glosbe client to use Cossack
 * [ ] Follow redirections
-* [ ] Examples
+  * [ ] Introduce `redirection_limit` option in RequestOptions
+  * [ ] Implement RedirectionMiddleware
 * [ ] Additional sugar
   * [x] Pass headers to Response.new and Request.new as Hash(String, String)
-  * [ ] Add `:headers` argument to http methods
   * [ ] Add methods to Response: redirection?, client_error?, server_error?
 * [x] Acceptance tests
+* [ ] Setup TravisCI and Crystal doc badges
+* [ ] Add LGPL license
+* [ ] Documentation for the code base
+* [ ] Examples
 * [ ] Good documentation, describing the concept and usage.
   * [ ] Docs for code base
   * [ ] README docs
@@ -46,7 +49,6 @@ Simple and flexible HTTP client for Crystal programming language.
     * [ ] FAQ
       * [ ] How to send headers?
       * [ ] How to handle basic authentication?
-* [ ] Add LGPL license
 * [ ] First release!
 * [ ] Open PR to awesome-crystal
 
