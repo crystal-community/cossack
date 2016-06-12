@@ -30,9 +30,9 @@ Simple and flexible HTTP client for Crystal programming language.
 * [ ] Follow redirections
   * [ ] Introduce `redirection_limit` option in RequestOptions
   * [ ] Implement RedirectionMiddleware
-* [ ] Additional sugar
+* [x] Additional sugar
   * [x] Pass headers to Response.new and Request.new as Hash(String, String)
-  * [ ] Add methods to Response: redirection?, client_error?, server_error?
+  * [x] Add methods to Response: redirection?, client_error?, server_error?
 * [x] Acceptance tests
 * [ ] Setup TravisCI and Crystal doc badges
 * [ ] Add LGPL license
@@ -49,6 +49,7 @@ Simple and flexible HTTP client for Crystal programming language.
     * [ ] FAQ
       * [ ] How to send headers?
       * [ ] How to handle basic authentication?
+      * [ ] Follow redirections
 * [ ] First release!
 * [ ] Open PR to awesome-crystal
 

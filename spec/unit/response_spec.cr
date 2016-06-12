@@ -31,16 +31,57 @@ Spec2.describe Cossack::Response do
     end
   end
 
-  describe "#success?" do
-    it "returns true for status between 200 and 299" do
-      { 199 => false,
-        200 => true,
-        204 => true,
-        299 => true,
-        300 => false
-      }.each do |status, expected_value|
-        response = Cossack::Response.new(status, "")
-        expect(response.success?).to eq expected_value
+  describe "status methods" do
+    describe "#success?" do
+      it "returns true for 2xx responses" do
+        { 199 => false,
+          200 => true,
+          204 => true,
+          299 => true,
+          300 => false
+        }.each do |status, expected_value|
+          response = Cossack::Response.new(status, "")
+          expect(response.success?).to eq expected_value
+        end
+      end
+    end
+
+    describe "#redirection?" do
+      it "returns true for 3xx responses" do
+        { 299 => false,
+          300 => true,
+          399 => true,
+          400 => false
+        }.each do |status, expected_value|
+          response = Cossack::Response.new(status, "")
+          expect(response.redirection?).to eq expected_value
+        end
+      end
+    end
+
+    describe "#client_error?" do
+      it "returns true for 3xx responses" do
+        { 399 => false,
+          400 => true,
+          499 => true,
+          500 => false
+        }.each do |status, expected_value|
+          response = Cossack::Response.new(status, "")
+          expect(response.client_error?).to eq expected_value
+        end
+      end
+    end
+
+    describe "#server_error?" do
+      it "returns true for 3xx responses" do
+        { 499 => false,
+          500 => true,
+          599 => true,
+          600 => false
+        }.each do |status, expected_value|
+          response = Cossack::Response.new(status, "")
+          expect(response.server_error?).to eq expected_value
+        end
       end
     end
   end
