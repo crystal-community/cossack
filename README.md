@@ -52,6 +52,7 @@ Simple and flexible HTTP client for Crystal programming language.
       * [ ] Follow redirections
 * [ ] First release!
 * [ ] Open PR to awesome-crystal
+* [ ] Implement before / after callbacks
 
 ## Installation
 
@@ -75,8 +76,12 @@ crystal deps
 ```crystal
 require "cossack"
 
-cossack = Cossack.new
-cossack.get("http://some.url/path")
+cossack = Cossack::Client.new("http://example.org")
+response = cossack.get("/info")
+
+response.status  # => 200
+response.body    # => "Info"
+response.headers
 ```
 
 ## Development
