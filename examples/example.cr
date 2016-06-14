@@ -35,8 +35,8 @@ class Cache < Cossack::Middleware
 end
 
 cossack = Cossack::Client.new do |client|
-  client.add_middleware DurationLogger.new
-  client.add_middleware Cache.new
+  client.use DurationLogger.new
+  client.use Cache.new
 end
 
 

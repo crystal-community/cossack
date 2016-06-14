@@ -32,7 +32,7 @@ Simple and flexible HTTP client for Crystal programming language.
   * [x] Implement RedirectionMiddleware
   * [x] Acceptance tests
   * [ ] Unit tests
-* [ ] Rename method Client#add_middleware -> Client#use
+* [x] Rename method Client#add_middleware -> Client#use
 * [x] Additional sugar
   * [x] Pass headers to Response.new and Request.new as Hash(String, String)
   * [x] Add methods to Response: redirection?, client_error?, server_error?

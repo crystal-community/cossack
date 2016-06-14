@@ -24,8 +24,8 @@ module Cossack
       initialize(base_url) { }
     end
 
-    def add_middleware(klass, *args, **nargs)
-      @middlewares << klass.new(@app, *args, **nargs)
+    def use(middleware_class, *args, **nargs)
+      @middlewares << middleware_class.new(@app, *args, **nargs)
       @app = @middlewares.last
     end
 

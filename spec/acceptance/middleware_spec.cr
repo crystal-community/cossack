@@ -24,8 +24,8 @@ describe "Middleware usage" do
     responses = [] of String
 
     client = Cossack::Client.new(TEST_SERVER_URL) do |client|
-      client.add_middleware TestMiddlwareWriter, responses
-      client.add_middleware TestMiddlewareNull
+      client.use TestMiddlwareWriter, responses
+      client.use TestMiddlewareNull
     end
 
     client.get("/")
@@ -39,7 +39,7 @@ describe "Middleware usage" do
     responses = [] of String
 
     client = Cossack::Client.new(TEST_SERVER_URL) do |client|
-      client.add_middleware TestMiddlwareWriter, responses
+      client.use TestMiddlwareWriter, responses
       client.connection = -> (req : Cossack::Request) do
         Cossack::Response.new(201, HTTP::Headers.new, "hello")
       end
@@ -52,7 +52,7 @@ describe "Middleware usage" do
     responses = [] of String
 
     client = Cossack::Client.new(TEST_SERVER_URL) do |client|
-      client.add_middleware TestMiddlwareWriter, responses
+      client.use TestMiddlwareWriter, responses
       client.set_connection do |req|
         Cossack::Response.new(201, HTTP::Headers.new, "hello")
       end

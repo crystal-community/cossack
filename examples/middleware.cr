@@ -15,7 +15,7 @@ class DurationLogger < Cossack::Middleware
 end
 
 cossack = Cossack::Client.new do |client|
-  client.add_middleware DurationLogger
+  client.use DurationLogger
 end
 
 response = cossack.get("http://jsonplaceholder.typicode.com/posts", {"postId" => "1"})
