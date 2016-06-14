@@ -31,4 +31,17 @@ get "/delay/:delay" do |env|
   delay.to_s
 end
 
+get "/redirect/:count" do |env|
+  count = env.params.url["count"].to_i
+  env.response.headers["COUNT"] = count.to_s
+  case count % 3
+  when 0
+    env.redirect "/redirect/#{count + 1}"
+  when 1
+    env.redirect "#{count + 1}"
+  when 2
+    env.redirect "http://0.0.0.0:3999/redirect/#{count + 1}"
+  end
+end
+
 Kemal.run

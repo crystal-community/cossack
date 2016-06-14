@@ -7,7 +7,6 @@ Spec2.describe Cossack::RequestOptions do
     it "sets default values" do
       expect(options.connect_timeout).to eq 30.0
       expect(options.read_timeout).to eq 30.0
-      expect(options.redirection_limit).to eq 5
     end
   end
 
@@ -32,13 +31,6 @@ Spec2.describe Cossack::RequestOptions do
     it "accepts Time::Span" do
       options.read_timeout = 2.minutes
       expect(options.read_timeout).to eq 120.0
-    end
-  end
-
-  describe "#redirection_limit=" do
-    it "sets redirection_limit" do
-      options.redirection_limit = 13
-      expect(options.redirection_limit).to eq 13
     end
   end
 end
