@@ -28,8 +28,11 @@ Simple and flexible HTTP client for Crystal programming language.
   * [x] Update GoogleTranslate client to use Cossack
   * [x] Update Glosbe client to use Cossack
 * [ ] Follow redirections
-  * [ ] Introduce `redirection_limit` option in RequestOptions
-  * [ ] Implement RedirectionMiddleware
+  * [x] Introduce `redirection_limit` option in RequestOptions (CANCELED)
+  * [x] Implement RedirectionMiddleware
+  * [x] Acceptance tests
+  * [ ] Unit tests
+* [ ] Rename method Client#add_middleware -> Client#use
 * [x] Additional sugar
   * [x] Pass headers to Response.new and Request.new as Hash(String, String)
   * [x] Add methods to Response: redirection?, client_error?, server_error?
