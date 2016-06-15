@@ -74,7 +74,7 @@ module Cossack
           end
         end
 
-        request = Request.new("{{method.id.upcase}}", uri, @headers.clone, options: @request_options.clone)
+        request = Request.new("{{method.id.upcase}}", uri, @headers.dup, options: @request_options.dup)
         yield(request)
         call(request)
       end
@@ -88,7 +88,7 @@ module Cossack
 
       def {{method.id}}(url : String, body : String = "")
         uri = complete_uri!(URI.parse(url))
-        request = Request.new("{{method.id.upcase}}", uri, @headers.clone, body, @request_options.clone)
+        request = Request.new("{{method.id.upcase}}", uri, @headers.dup, body, @request_options.dup)
         yield(request)
         call(request)
       end
