@@ -28,11 +28,11 @@ module Cossack
       error_message = <<-MESSAGE
       Request `#{request.method} #{request.uri.to_s}` is not stubbed.
       You can stub it with the following code:\n
-          connection.#{request.method.downcase}("#{request.uri.path}", {200, "Response body"})
+          connection.stub_#{request.method.downcase}("#{request.uri.path}", {200, "Response body"})
         OR
-          connection.#{request.method.downcase}("#{request.uri}", {200, {"Response-Header" => "value"}, "Response body"})
+          connection.stub_#{request.method.downcase}("#{request.uri}", {200, {"Response-Header" => "value"}, "Response body"})
         OR
-          connection.#{request.method.downcase}("#{request.uri}", {"Request-Header" => "value"}, {200, "Response body"})\n
+          connection.stub_#{request.method.downcase}("#{request.uri}", {"Request-Header" => "value"}, {200, "Response body"})\n
       Where `connection` is an instance of Cossack::TestConnection.\n
       MESSAGE
       raise(Cossack::MockError.new(error_message))
