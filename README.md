@@ -38,7 +38,7 @@ Simple and flexible HTTP client for Crystal programming language.
   * [x] Add methods to Response: redirection?, client_error?, server_error?
 * [x] Acceptance tests
 * [ ] Setup TravisCI and Crystal doc badges
-* [ ] Add LGPL license
+* [ ] Add LGPL license (tweak shard.yml also)
 * [ ] Documentation for the code base
 * [ ] Examples
 * [ ] Good documentation, describing the concept and usage.
