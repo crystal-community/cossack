@@ -1,4 +1,12 @@
 module Cossack
+  # Follows 3xx redirects.
+  #
+  # ```
+  # Cossack::Client.new do |client|
+  #   # follow up to 10 redirects (by default 5)
+  #   client.use Cossack::RedirectionMiddleware, limit: 10
+  # end
+  # ```
   class RedirectionMiddleware < Middleware
     @limit : Int32
 

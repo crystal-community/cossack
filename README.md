@@ -27,19 +27,19 @@ Simple and flexible HTTP client for Crystal programming language.
 * [x] Beta test of API
   * [x] Update GoogleTranslate client to use Cossack
   * [x] Update Glosbe client to use Cossack
-* [ ] Follow redirections
+* [x] Follow redirections
   * [x] Introduce `redirection_limit` option in RequestOptions (CANCELED)
   * [x] Implement RedirectionMiddleware
   * [x] Acceptance tests
-  * [ ] Unit tests
+  * [x] Unit tests
 * [x] Rename method Client#add_middleware -> Client#use
 * [x] Additional sugar
   * [x] Pass headers to Response.new and Request.new as Hash(String, String)
   * [x] Add methods to Response: redirection?, client_error?, server_error?
 * [x] Acceptance tests
+* [ ] Documentation for the code base
 * [ ] Setup TravisCI and Crystal doc badges
 * [ ] Add LGPL license (tweak shard.yml also)
-* [ ] Documentation for the code base
 * [ ] Examples
 * [ ] Good documentation, describing the concept and usage.
   * [ ] Docs for code base
