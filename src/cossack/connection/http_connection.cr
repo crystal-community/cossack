@@ -1,4 +1,5 @@
 module Cossack
+  # A connection to perform a real HTTP request using the standard library.
   class HTTPConnection < Connection
     def call(request : Request) : Response
       client = HTTP::Client.new(request.uri)
