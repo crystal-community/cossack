@@ -1,5 +1,8 @@
 # Cossack <img src="https://cloud.githubusercontent.com/assets/113512/15764341/65d90c06-292a-11e6-8f91-44ed93e024f8.png" alt="crystal Cossack logo" width="48">
 
+[![Build Status](https://travis-ci.org/greyblake/crystal-cossack.svg?branch=master)](https://travis-ci.org/greyblake/crystal-cossack)
+[![docrystal.org](http://docrystal.org/badge.svg?style=round)](http://docrystal.org/github.com/greyblake/crystal-cossack)
+
 Simple and flexible HTTP client for Crystal programming language.
 
 ## Roadmap
@@ -39,7 +42,7 @@ Simple and flexible HTTP client for Crystal programming language.
 * [x] Acceptance tests
 * [x] MockError -> StubError
 * [x] Remove `Client#set_connection` method
-* [ ] Setup TravisCI and Crystal doc badges
+* [x] Setup TravisCI and Crystal doc badges
 * [x] Add LGPL license (tweak shard.yml also)
 * [ ] Examples
 * [ ] Good documentation, describing the concept and usage.
