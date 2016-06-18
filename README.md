@@ -80,7 +80,6 @@ crystal deps
 
 ## Usage
 
-
 ```crystal
 require "cossack"
 
@@ -89,15 +88,27 @@ response = cossack.get("/info")
 
 response.status  # => 200
 response.body    # => "Info"
-response.headers
+response.headers # hash-like headers
 ```
 
 ## Development
 
-To run test:
+To run all tests:
 
 ```
 make test
+```
+
+To run unit tests:
+
+```
+make test_unit
+```
+
+To run acceptance tests:
+
+```
+make test_acceptance
 ```
 
 ## Contributors
