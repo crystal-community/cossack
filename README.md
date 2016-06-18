@@ -37,7 +37,7 @@ end
 
 # Send GET request to http://example.org/info
 response = cossack.get("/info") do |request|
-  # modify particular request
+  # modify a particular request
   request.headers["Accept-Language"] = "eo"
 end
 
@@ -69,7 +69,7 @@ The following time diagram shows how it works:
 
 Middleware are custom classes that are injected in between Client and Connection. They allow you to intercept request or response and modify them.
 
-Middleware class should be inherited from `Cossack::Middleware` and implement `#call(Cossack::Request) : Response` interface.
+Middleware class should be inherited from `Cossack::Middleware` and implement `#call(Cossack::Request) : Cossack::Response` interface.
 It also should execute `app.call(request)` in order to forward a request.
 
 Let's implement simple middleware that prints all requests:
@@ -92,11 +92,27 @@ cossack = Cossack::Client.new("http://example.org") do |client|
   client.use StdoutLogMiddleware
 end
 
-# Now every request will be logged to STDOUT
+# Every request will be logged to STDOUT
 response = cossack.get("/test")
 ```
 
+Cossack has some preimplemented middleware, don't be afraid to [take a look](https://github.com/greyblake/crystal-cossack/tree/master/src/cossack/middleware).
+
 ### Connection Swapping
+
+Connection is something, that receives Request and returns back Response. By default client as [HTTPConnection](https://github.com/greyblake/crystal-cossack/blob/master/src/cossack/connection/http_connection.cr),
+that performs real HTTP requests. But if you don't like it by some reason, or you want to modify its behaviour, you can replace it
+with you own. It must be a proc a subclass of `Cossack::Connection`:
+
+```crystal
+client = Cossack::Client.new
+client.connection = -> (request : Cossack::Request) do
+  Cossack::Response.new(200, "Everything is fine")
+end
+
+response = client.put("http://example.org/no/matter/what")
+puts response.body # => "Everything is fine"
+```
 
 ### Testing
 
