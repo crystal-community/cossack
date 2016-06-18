@@ -35,7 +35,7 @@ module Cossack
           connection.stub_#{request.method.downcase}("#{request.uri}", {"Request-Header" => "value"}, {200, "Response body"})\n
       Where `connection` is an instance of Cossack::TestConnection.\n
       MESSAGE
-      raise(Cossack::MockError.new(error_message))
+      raise(Cossack::NoStubError.new(error_message))
     end
 
     {% for method in %w(post put patch get delete head options) %}

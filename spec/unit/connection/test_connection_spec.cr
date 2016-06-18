@@ -33,7 +33,7 @@ Spec2.describe Cossack::TestConnection do
       context "when URL does not match" do
         it "raises exception" do
           connection.stub_get("/run", {200, "away"})
-          expect { connection.call(request) }.to raise_error(Cossack::MockError)
+          expect { connection.call(request) }.to raise_error(Cossack::NoStubError)
         end
       end
     end
@@ -61,7 +61,7 @@ Spec2.describe Cossack::TestConnection do
       context "when headers do not match" do
         it "raises exception" do
           connection.stub_get("/ping", {"User-Agent" => "oops"}, {200, {"Content-Length" => "4"}, "pong"})
-          expect { connection.call(request) }.to raise_error(Cossack::MockError)
+          expect { connection.call(request) }.to raise_error(Cossack::NoStubError)
         end
       end
     end
@@ -128,7 +128,7 @@ Spec2.describe Cossack::TestConnection do
       context "when body does not match" do
         it "raises exception" do
           connection.stub_post("/ping", "SOMETHING", {200, "pong"})
-          expect { connection.call(request) }.to raise_error(Cossack::MockError)
+          expect { connection.call(request) }.to raise_error(Cossack::NoStubError)
         end
       end
 
@@ -145,7 +145,7 @@ Spec2.describe Cossack::TestConnection do
         context "when headers do not match" do
           it "returns response" do
             connection.stub_post("/ping", {"User-Agent" => "Chrome"}, "REQUEST_BODY", {200, "pong"})
-            expect { connection.call(request) }.to raise_error(Cossack::MockError)
+            expect { connection.call(request) }.to raise_error(Cossack::NoStubError)
           end
         end
       end
@@ -188,7 +188,7 @@ Spec2.describe Cossack::TestConnection do
 
   context "when request is not stubbed" do
     it "raises error" do
-      expect { connection.call(request) }.to raise_error(Cossack::MockError)
+      expect { connection.call(request) }.to raise_error(Cossack::NoStubError)
     end
   end
 end

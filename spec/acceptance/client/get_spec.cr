@@ -18,7 +18,8 @@ Spec2.describe "GET requests" do
 
   context "using module method" do
     it "sends GET" do
-      response = Cossack.get(TEST_SERVER_URL)
+      response = Cossack.get("#{TEST_SERVER_URL}/")
+      expect(response.status).to eq 200
       expect(response.body).to eq "root"
     end
 

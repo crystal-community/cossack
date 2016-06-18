@@ -6,9 +6,13 @@ require "./cossack/**"
 module Cossack
   alias Params = Hash(String, String)
 
+  # Common Cossack error.
   class Error < Exception; end
+
   class TimeoutError < Error; end
-  class MockError < Error; end
+
+  # Raised by TestConnection, when HTTP request is not stubbed.
+  class NoStubError < Error; end
 
   @@default_client = Client.new
 
