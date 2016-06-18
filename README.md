@@ -15,6 +15,7 @@ Simple and flexible HTTP client for Crystal with middleware and test support.
   * [How to follow redirections](#how-to-follow-redirections)
 * [Development](#development)
 * [Roadmap](#roadmap)
+* [Afterword](#afterword)
 * [Contributors](#contributors)
 
 ## Installation
