@@ -55,7 +55,7 @@ Simple and flexible HTTP client for Crystal programming language.
       * [ ] How to handle basic authentication?
       * [ ] Follow redirections
 * [ ] First release!
-* [ ] Open PR to awesome-crystal
+* [x] Open PR to awesome-crystal
 * [ ] Implement before / after callbacks
 * [ ] Add context/env Hash(String, String) to Request and Response
 
