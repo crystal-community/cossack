@@ -10,7 +10,7 @@ Simple and flexible HTTP client for Crystal with middleware and test support.
 * [The concept](#the-concept)
 * [Using Middleware](#using-middleware)
 * [Connection swapping](#connection-swapping)
-* [Testing](#testng)
+* [Testing](#testing)
 * [FAQ](#faq)
   * [How to follow redirections](#how-to-follow-redirections)
 * [Development](#development)
@@ -25,6 +25,7 @@ Add this to your application's `shard.yml`:
 dependencies:
   cossack:
     github: greyblake/crystal-cossack
+    version: ~> 0.1
 ```
 
 And install dependencies:
@@ -139,7 +140,7 @@ stub HTTP requests in specs.
 describe "TestConnection example" do
   it "stubs real requests" do
     connection = Cossack::TestConnection.new
-    connection.stub_get("/hello/world", {200, "Hello developer!"}
+    connection.stub_get("/hello/world", {200, "Hello developer!"})
 
     client = Cossack::Client.new("http://example.org")
     client.connection = connection
@@ -153,6 +154,7 @@ end
 
 You can find real examples in [Glosbe](https://github.com/greyblake/crystal-glosbe/blob/master/spec/glosbe/client_spec.cr) and
 [GoogleTranslate](https://github.com/greyblake/crystal-google_translate/blob/master/spec/google_translate/client_spec.cr) clients.
+Or in [Cossack specs](https://github.com/greyblake/crystal-cossack/blob/master/spec/unit/connection/test_connection_spec.cr) itself.
 
 ## FAQ
 
@@ -190,10 +192,16 @@ make test_acceptance
 ```
 
 ## Roadmap
-* [x] Open PR to awesome-crystal
 * [ ] Implement before / after callbacks
 * [ ] Add context/env Hash(String, String) to Request and Response
 * [ ] Find a way to perform basic autentication
+
+## Afterword
+
+If you like the concept and design of the library, then may be we can bring the idea to Crystal!
+There is no need to keep this library, if we can have the same things in standard library.
+And I guess [crystal maintainers won't resist](https://github.com/crystal-lang/crystal/issues/2721#issuecomment-223399683).
+But first we need to get positive feedback to ensure we're moving in the right direction =)
 
 ## Contributors
 
