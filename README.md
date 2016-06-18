@@ -40,7 +40,7 @@ Simple and flexible HTTP client for Crystal programming language.
 * [x] MockError -> StubError
 * [x] Remove `Client#set_connection` method
 * [ ] Setup TravisCI and Crystal doc badges
-* [ ] Add LGPL license (tweak shard.yml also)
+* [x] Add LGPL license (tweak shard.yml also)
 * [ ] Examples
 * [ ] Good documentation, describing the concept and usage.
   * [ ] Docs for code base
