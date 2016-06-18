@@ -37,8 +37,8 @@ Simple and flexible HTTP client for Crystal programming language.
   * [x] Pass headers to Response.new and Request.new as Hash(String, String)
   * [x] Add methods to Response: redirection?, client_error?, server_error?
 * [x] Acceptance tests
-* [ ] MockError -> StubError
-* [ ] Remove `Client#set_connection` method
+* [x] MockError -> StubError
+* [x] Remove `Client#set_connection` method
 * [ ] Setup TravisCI and Crystal doc badges
 * [ ] Add LGPL license (tweak shard.yml also)
 * [ ] Examples

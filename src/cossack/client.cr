@@ -6,7 +6,7 @@ module Cossack
     @headers : HTTP::Headers
     @app : Middleware|Connection|Proc(Request, Response)
 
-    getter :base_uri, :headers, :request_options
+    getter :base_uri, :headers, :request_options, :connection
 
     def initialize(base_url = nil)
       @headers = default_headers
@@ -36,19 +36,6 @@ module Cossack
       else
         @app = @connection
       end
-    end
-
-    def set_connection(&block : Request -> Response)
-      @connection = block
-      if @middlewares.first
-        @middlewares.first.__set_app__(@connection)
-      else
-        @app = @connection
-      end
-    end
-
-    def connection
-      @connection
     end
 
     def call(request : Request) : Response

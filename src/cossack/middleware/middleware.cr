@@ -9,6 +9,7 @@ module Cossack
     def initialize(@app)
     end
 
+    # Internal public method. Used in Client to swap a connection.
     def __set_app__(app)
       @app = app
     end
