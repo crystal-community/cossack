@@ -47,19 +47,7 @@ The main things are: Client, Request, Response, Connection, Middleware.
 
 The following time diagram shows how it works:
 
-```
-       Client#get   Middleware#call   Connection#call
-get        +--+
- --------->|  |  request   +--+
-           |  |----------->|  |  request   +--+
-           |  |            |  |----------->|  |
-           |  |            |  |            |  |
-           |  |            |  |<-----------|  |
-           |  |<-----------|  | response   +--+
- <---------|  |  response  +--+
-response   +--+
-
-```
+![Crystal HTTP client Cossack time diagram](https://raw.githubusercontent.com/greyblake/crystal-cossack/master/images/time_diagram.png)
 
 ## Development
 
