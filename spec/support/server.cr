@@ -1,3 +1,5 @@
+# Server for acceptance tests.
+
 require "kemal"
 
 get "/" do

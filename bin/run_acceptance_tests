@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-./bin/stop_server
-./bin/start_server
-crystal spec $(find ./spec/acceptance -name '*_spec.cr')
-./bin/stop_server

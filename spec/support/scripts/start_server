@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-echo "Building ./bin/server.cr ..."
-crystal build ./bin/server.cr -o ./tmp/server
+echo "Building ./spec/support/server.cr ..."
+crystal build ./spec/support/server.cr -o ./tmp/server
 
 echo "Starting the test server..."
 ./tmp/server -p 3999 > ./tmp/server.log &

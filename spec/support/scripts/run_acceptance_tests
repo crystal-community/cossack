@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+$SCRIPTS_DIR/stop_server
+$SCRIPTS_DIR/start_server
+crystal spec $(find ./spec/acceptance -name '*_spec.cr')
+$SCRIPTS_DIR/stop_server
