@@ -26,12 +26,28 @@ crystal deps
 ```crystal
 require "cossack"
 
-cossack = Cossack::Client.new("http://example.org")
-response = cossack.get("/info")
+# Create an instance of a client with basic URL
+cossack = Cossack::Client.new("http://example.org") do |client|
+  # Set headers
+  client.headers["Authorization"] = "Bearer SECRET-TOKEN"
 
-response.status  # => 200
-response.body    # => "Info"
-response.headers # hash-like headers
+  # Modify request options (by default connect_timeout is 30 sec)
+  client.request_options.connect_timeout = 60.seconds
+end
+
+# Send GET request to http://example.org/info
+response = cossack.get("/info") do |request|
+  # modify particular request
+  request.headers["Accept-Language"] = "eo"
+end
+
+# Explore response
+response.status                     # => 200
+response.body                       # => "Info"
+response.headers["Content-Length"]  # => 4
+
+# Send POST request
+cossack.post("/comments", "Request body")
 ```
 
 ## The concept
@@ -48,6 +64,41 @@ The main things are: Client, Request, Response, Connection, Middleware.
 The following time diagram shows how it works:
 
 ![Crystal HTTP client Cossack time diagram](https://raw.githubusercontent.com/greyblake/crystal-cossack/master/images/cossack_diagram.png)
+
+### Using Middleware
+
+Middleware are custom classes that are injected in between Client and Connection. They allow you to intercept request or response and modify them.
+
+Middleware class should be inherited from `Cossack::Middleware` and implement `#call(Cossack::Request) : Response` interface.
+It also should execute `app.call(request)` in order to forward a request.
+
+Let's implement simple middleware that prints all requests:
+
+```crystal
+class StdoutLogMiddleware < Cossack::Middleware
+  call(request)
+    puts "#{request.method} #{request.uri}"
+    response = app.call(request)
+    puts "Response: #{response.status} #{response.body}"
+    response
+  end
+end
+```
+
+Now let's apply it to a client:
+
+```crystal
+cossack = Cossack::Client.new("http://example.org") do |client|
+  client.use StdoutLogMiddleware
+end
+
+# Now every request will be logged to STDOUT
+response = cossack.get("/test")
+```
+
+### Connection Swapping
+
+### Testing
 
 ## Development
 
@@ -110,10 +161,10 @@ make test_acceptance
 * [x] Add LGPL license (tweak shard.yml also)
 * [ ] Examples
 * [ ] Good documentation, describing the concept and usage.
-  * [ ] Docs for code base
+  * [x] Docs for code base
   * [ ] README docs
-    * [ ] Getting started example
-    * [ ] Basic concept: Request, Response, Client, Connection. (Middleware?)
+    * [x] Getting started example
+    * [x] Basic concept: Request, Response, Client, Connection. (Middleware?)
     * [ ] Advanced usage
       * [ ] Middleware
     * [ ] Testing
