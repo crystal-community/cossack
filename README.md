@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/greyblake/crystal-cossack.svg?branch=master)](https://travis-ci.org/greyblake/crystal-cossack)
 [![docrystal.org](http://docrystal.org/badge.svg?style=round)](http://docrystal.org/github.com/greyblake/crystal-cossack)
 
-Simple and flexible HTTP client for Crystal programming language.
+Simple and flexible HTTP client for Crystal with middleware and test support.
 
 ## Roadmap
 * [x] Middleware support
@@ -89,6 +89,38 @@ response = cossack.get("/info")
 response.status  # => 200
 response.body    # => "Info"
 response.headers # hash-like headers
+```
+
+## The concept
+
+Cossack is inspired by [Faraday](https://github.com/lostisland/faraday) and [Hurley](https://github.com/lostisland/hurley) libraries from the ruby world.
+
+The main things are: Client, Request, Response, Connection, Middleware.
+
+Client - provides a convenient API to build and perform HTTP requests. Keeps default request parameters(base url, headers, request options, etc.)
+
+Request - HTTP request(method, uri, headers, body) with its options (e.g. connect_timeout`).
+
+Response - HTTP response(method, headers, body).
+
+Connection - executes actual Request, used by Client and can be subsituted (e.g. for test purposes).
+
+Middleware - can be injected between Client and Connection to execute some custom stuff(e.g. logging, caching, etc.)
+
+The following time diagram shows how it actually works:
+
+```
+       Client#get   Middleware#call   Connection#call
+get        +--+
+ --------->|  |  request   +--+
+           |  |----------->|  |  request   +--+
+           |  |            |  |----------->|  |
+           |  |            |  |            |  |
+           |  |            |  |<-----------|  |
+           |  |<-----------|  | response   +--+
+ <---------|  |  response  +--+
+response   +--+
+
 ```
 
 ## Development
