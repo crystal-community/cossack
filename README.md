@@ -5,6 +5,18 @@
 
 Simple and flexible HTTP client for Crystal with middleware and test support.
 
+* [Installation](#installation)
+* [Usage](#usage)
+* [The concept](#the-concept)
+* [Using Middleware](#using-middleware)
+* [Connection swapping](#connection-swapping)
+* [Testing](#testng)
+* [FAQ](#faq)
+  * [How to follow redirections](#how-to-follow-redirections)
+* [Development](#development)
+* [Roadmap](#roadmap)
+* [Contributors](#contributors)
+
 ## Installation
 
 Add this to your application's `shard.yml`:
@@ -21,7 +33,7 @@ And install dependencies:
 crystal deps
 ```
 
-## Get started example
+## Usage
 
 ```crystal
 require "cossack"
@@ -80,7 +92,7 @@ Let's implement simple middleware that prints all requests:
 
 ```crystal
 class StdoutLogMiddleware < Cossack::Middleware
-  call(request)
+  def call(request)
     puts "#{request.method} #{request.uri}"
     response = app.call(request)
     puts "Response: #{response.status} #{response.body}"
@@ -142,6 +154,21 @@ end
 You can find real examples in [Glosbe](https://github.com/greyblake/crystal-glosbe/blob/master/spec/glosbe/client_spec.cr) and
 [GoogleTranslate](https://github.com/greyblake/crystal-google_translate/blob/master/spec/google_translate/client_spec.cr) clients.
 
+## FAQ
+
+### How to follow redirections
+
+If you want a client to follow redirections, you can use `Cossack::RedirectionMiddleware`:
+
+```crystal
+cossack = Cossack::Client.new do |client|
+  # follow up to 10 redirections (by default 5)
+  client.use Cossack::RedirectionMiddleware, limit: 10
+end
+
+cossack.get("http://example.org/redirect-me")
+```
+
 ## Development
 
 To run all tests:
@@ -163,61 +190,10 @@ make test_acceptance
 ```
 
 ## Roadmap
-* [x] Middleware support
-* [x] Use URI to parse URL
-* [x] Allow `Client` be initialized with base `url`
-* [x] support headers for individual request
-* [x] support headers for Client
-* [x] Support of all HTTP verbs
-  * [x] get
-  * [x] post
-  * [x] put
-  * [x] patch
-  * [x] delete
-  * [x] head
-  * [x] options
-* [x] Implement class methods, like `Cossack.get`, `Cossack.post`, etc..
-* [x] Swapping connections [like Hurley does](https://github.com/lostisland/hurley#connections)
-* [x] Timeout
-* [x] Move `connect_timeout` and `read_timeout` opts to Request object. Introduce RequestOptions.
-* [x] Extract Client#call method
-* [x] Implement TestConnection (ConnectionMock)
-* [x] Unit tests
-* [x] Rename HttpConnection -> HTTPConnection (it's Crystal convention)
-* [x] Beta test of API
-  * [x] Update GoogleTranslate client to use Cossack
-  * [x] Update Glosbe client to use Cossack
-* [x] Follow redirections
-  * [x] Introduce `redirection_limit` option in RequestOptions (CANCELED)
-  * [x] Implement RedirectionMiddleware
-  * [x] Acceptance tests
-  * [x] Unit tests
-* [x] Rename method Client#add_middleware -> Client#use
-* [x] Additional sugar
-  * [x] Pass headers to Response.new and Request.new as Hash(String, String)
-  * [x] Add methods to Response: redirection?, client_error?, server_error?
-* [x] Acceptance tests
-* [x] MockError -> StubError
-* [x] Remove `Client#set_connection` method
-* [x] Setup TravisCI and Crystal doc badges
-* [x] Add LGPL license (tweak shard.yml also)
-* [ ] Examples
-* [ ] Good documentation, describing the concept and usage.
-  * [x] Docs for code base
-  * [ ] README docs
-    * [x] Getting started example
-    * [x] Basic concept: Request, Response, Client, Connection. (Middleware?)
-    * [x] Advanced usage
-      * [x] Middleware
-    * [x] Testing
-    * [ ] FAQ
-      * [ ] How to send headers?
-      * [ ] How to handle basic authentication?
-      * [ ] Follow redirections
-* [ ] First release!
 * [x] Open PR to awesome-crystal
 * [ ] Implement before / after callbacks
 * [ ] Add context/env Hash(String, String) to Request and Response
+* [ ] Find a way to perform basic autentication
 
 ## Contributors
 
