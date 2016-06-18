@@ -21,10 +21,14 @@ And install dependencies:
 crystal deps
 ```
 
-## Usage
+## Get started example
 
 ```crystal
 require "cossack"
+
+# Send a single GET request
+response = Cossack.get("https://www.w3.org/")
+response.body  # => "Bla bla bla"
 
 # Create an instance of a client with basic URL
 cossack = Cossack::Client.new("http://example.org") do |client|
@@ -65,7 +69,7 @@ The following time diagram shows how it works:
 
 ![Crystal HTTP client Cossack time diagram](https://raw.githubusercontent.com/greyblake/crystal-cossack/master/images/cossack_diagram.png)
 
-### Using Middleware
+## Using Middleware
 
 Middleware are custom classes that are injected in between Client and Connection. They allow you to intercept request or response and modify them.
 
@@ -98,7 +102,7 @@ response = cossack.get("/test")
 
 Cossack has some preimplemented middleware, don't be afraid to [take a look](https://github.com/greyblake/crystal-cossack/tree/master/src/cossack/middleware).
 
-### Connection Swapping
+## Connection Swapping
 
 Connection is something, that receives Request and returns back Response. By default client as [HTTPConnection](https://github.com/greyblake/crystal-cossack/blob/master/src/cossack/connection/http_connection.cr),
 that performs real HTTP requests. But if you don't like it by some reason, or you want to modify its behaviour, you can replace it
@@ -114,7 +118,29 @@ response = client.put("http://example.org/no/matter/what")
 puts response.body # => "Everything is fine"
 ```
 
-### Testing
+## Testing
+
+There is more use of connection swapping, when it comes to testing. Cossack has `TestConnection` that allows you to
+stub HTTP requests in specs.
+
+```crystal
+describe "TestConnection example" do
+  it "stubs real requests" do
+    connection = Cossack::TestConnection.new
+    connection.stub_get("/hello/world", {200, "Hello developer!"}
+
+    client = Cossack::Client.new("http://example.org")
+    client.connection = connection
+
+    response = client.get("/hello/world")
+    response.status.should eq 200
+    response.body.should eq "Hello developer!"
+  end
+end
+```
+
+You can find real examples in [Glosbe](https://github.com/greyblake/crystal-glosbe/blob/master/spec/glosbe/client_spec.cr) and
+[GoogleTranslate](https://github.com/greyblake/crystal-google_translate/blob/master/spec/google_translate/client_spec.cr) clients.
 
 ## Development
 
@@ -181,9 +207,9 @@ make test_acceptance
   * [ ] README docs
     * [x] Getting started example
     * [x] Basic concept: Request, Response, Client, Connection. (Middleware?)
-    * [ ] Advanced usage
-      * [ ] Middleware
-    * [ ] Testing
+    * [x] Advanced usage
+      * [x] Middleware
+    * [x] Testing
     * [ ] FAQ
       * [ ] How to send headers?
       * [ ] How to handle basic authentication?
