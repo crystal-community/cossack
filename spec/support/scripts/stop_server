@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-if [ -f ./tmp/server.pid ]; then
-  kill -9 $(cat ./tmp/server.pid) &> /dev/null
-fi
