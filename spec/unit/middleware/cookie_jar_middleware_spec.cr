@@ -2,7 +2,8 @@ require "../../spec_helper"
 
 Spec2.describe Cossack::CookieJarMiddleware do
   let(connection) { Cossack::TestConnection.new }
-  let(middleware) { Cossack::CookieJarMiddleware.new(connection) }
+  let(cookie_jar) { Cossack::CookieJar.new }
+  let(middleware) { Cossack::CookieJarMiddleware.new(connection, cookie_jar) }
   let(check_request) { Cossack::Request.new("GET", "http://example.com/abc/check_cookies") }
   let(set_request) { Cossack::Request.new("GET", "http://example.com/abc/set_cookies") }
 
