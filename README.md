@@ -96,9 +96,9 @@ Let's implement simple middleware that prints all requests:
 class StdoutLogMiddleware < Cossack::Middleware
   def call(request)
     puts "#{request.method} #{request.uri}"
-    response = app.call(request)
-    puts "Response: #{response.status} #{response.body}"
-    response
+    app.call(request).tap do |response|
+      puts "Response: #{response.status} #{response.body}"
+    end
   end
 end
 ```
