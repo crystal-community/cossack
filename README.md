@@ -172,6 +172,53 @@ end
 cossack.get("http://example.org/redirect-me")
 ```
 
+### How to persist cookies between requests
+
+If, for example, you're calling an API that relies on cookies, you'll need to
+use the `CookieJarMiddleware` like so:
+
+```crystal
+cossack = Cossack::Client.new do |client|
+  # Other middleware goes here
+end
+cossack.use Cossack::CookieJarMiddleware, cookie_jar: cossack.cookies
+```
+
+Note that `cossack.use Cossack::CookieJarMiddleware` needs to be outside of the
+`do ... end` block due to problems in Crystal (as of v0.18.7)
+
+### How to persist cookies past the life of the application
+
+If, for example, you have a need to retain cookies you're already storing
+between requests, you have the option to write them out to a file using
+something like the following:
+
+```crystal
+cossack = Cossack::Client.new do |client|
+  # Other middleware goes here
+end
+cossack.use Cossack::CookieJarMiddleware, cookie_jar: cossack.cookies
+
+# [code]
+
+cossack.cookies.export_to_file("/path/to/writable/directory/cookies.txt")
+```
+
+You may also import the cookies like so:
+```crystal
+cossack = Cossack::Client.new do |client|
+  # Other middleware goes here
+end
+cossack.cookies.import_from_file("/path/to/writable/directory/cookies.txt")
+
+# OR
+
+cossack = Cossack::Client.new do |client|
+  client.cookies = Cossack::CookieJar.from_file("/path/to/writable/directory/cookies.txt")
+  # Other middleware goes here
+end
+```
+
 ## Development
 
 To run all tests:
