@@ -21,7 +21,7 @@ Spec2.describe "CookieJarMiddleware usage" do
     expect(response.headers["Set-Cookie"]?).not_to be_nil
     expect(client.cookies.empty?).to be_false
 
-    expect(client.get("/cookie").body).to match(/^Cookie: /)
+    expect(client.get("/cookie").body).to match(/^Cookie: (?:.+;)?test_cookie=works(?:;.+|$)/)
   end
 
   it "handles cookies added manually" do
@@ -31,6 +31,6 @@ Spec2.describe "CookieJarMiddleware usage" do
     client.cookies << HTTP::Cookie.new("some_cookie", "some_value")
 
     expect(client.cookies.empty?).to be_false
-    expect(client.get("/cookie").body).to match(/^Cookie: /)
+    expect(client.get("/cookie").body).to match(/^Cookie: (?:.+;)?some_cookie=some_value(?:;.+|$)/)
   end
 end
