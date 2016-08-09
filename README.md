@@ -74,7 +74,7 @@ Cossack is inspired by [Faraday](https://github.com/lostisland/faraday) and [Hur
 
 The main things are: Client, Request, Response, Connection, Middleware.
 * **Client** - provides a convenient API to build and perform HTTP requests. Keeps default request parameters(base url, headers, request options, etc.)
-* **Request** - HTTP request(method, uri, headers, body) with its options (e.g. connect_timeout`).
+* **Request** - HTTP request(method, uri, headers, body) with its options (e.g. `connect_timeout`).
 * **Response** - HTTP response(method, headers, body).
 * **Connection** - executes actual Request, used by Client and can be subsituted (e.g. for test purposes).
 * **Middleware** - can be injected between Client and Connection to execute some custom stuff(e.g. logging, caching, etc.)
@@ -207,3 +207,4 @@ But first we need to get positive feedback to ensure we're moving in the right d
 ## Contributors
 
 - [greyblake](https://github.com/greyblake) Sergey Potapov - creator, maintainer
+- [thelonelyghost](https://github.com/thelonelyghost) David Alexander
