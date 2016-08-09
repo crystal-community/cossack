@@ -2,6 +2,10 @@ require "http/cookie"
 require "http/headers"
 
 module Cossack
+  # Stores cookies similar to HTTP::Cookies from Crystal's Std Library, but adds
+  # persistence methods in order to import/export to a file. The format is in
+  # Set-Cookie header style because Cookie headers lose information such as
+  # domain, http_only, and path restrictions
   class CookieJar < HTTP::Cookies
     def self.from_file(file_path : String)
       new.tap {|cj| cj.import_from_file(file_path) }
@@ -30,6 +34,10 @@ module Cossack
     end
 
     # OVERRIDE
+
+    # The methods below as they appear in the Std Library (as of v0.18.7) add a
+    # header that is blank if the cookie jar is empty instead of not adding any
+    # header at all.
 
     def add_request_headers(headers)
       super(headers) unless empty?
