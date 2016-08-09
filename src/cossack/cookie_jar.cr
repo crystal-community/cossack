@@ -3,6 +3,10 @@ require "http/headers"
 
 module Cossack
   class CookieJar < HTTP::Cookies
+    def self.from_file(file_path : String)
+      new.tap {|cj| cj.import_from_file(file_path) }
+    end
+
     def export_to_file(file_path : String)
       # exports to Set-Cookie header values
       headers = self.add_response_headers(HTTP::Headers.new)
@@ -10,10 +14,6 @@ module Cossack
       File.open(file_path, "w") do |file|
         headers.get("Set-Cookie").each { |line| file.puts line } unless headers.empty?
       end
-    end
-
-    def self.from_file(file_path : String)
-      new.tap {|cj| cj.import_from_file(file_path) }
     end
 
     def import_from_file(file_path : String)
