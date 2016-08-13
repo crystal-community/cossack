@@ -37,12 +37,29 @@ get "/redirect/:count" do |env|
   count = env.params.url["count"].to_i
   env.response.headers["COUNT"] = count.to_s
   case count % 3
-  when 0
-    env.redirect "/redirect/#{count + 1}"
-  when 1
-    env.redirect "#{count + 1}"
-  when 2
-    env.redirect "http://0.0.0.0:3999/redirect/#{count + 1}"
+  when 0 then env.redirect "/redirect/#{count + 1}"
+  when 1 then env.redirect "#{count + 1}"
+  when 2 then env.redirect "http://0.0.0.0:3999/redirect/#{count + 1}"
+  end
+end
+
+get "/cookie" do |env|
+  cookie = env.request.headers["Cookie"]?
+
+  cookie ? "Cookie: #{cookie}" : "No cookie found"
+end
+
+put "/cookie" do |env|
+  cookie = env.params.query["cookie"]?
+  cookie ||= env.params.json["cookie"]? as String?
+  if cookie
+    cookie.split(";").each do |line|
+      next unless line.strip.size > 0
+      env.response.headers.add "Set-Cookie", line.strip
+    end
+    "Cookie set"
+  else
+    "No cookie given"
   end
 end
 

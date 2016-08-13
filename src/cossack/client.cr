@@ -4,12 +4,14 @@ module Cossack
 
     @base_uri : URI
     @headers : HTTP::Headers
+    @cookies : CookieJar
     @app : Middleware|Connection|Proc(Request, Response)
 
-    getter :base_uri, :headers, :request_options, :connection
+    getter :base_uri, :headers, :request_options, :connection, :cookies
 
     def initialize(base_url = nil)
       @headers = default_headers
+      @cookies = CookieJar.new
       @request_options = RequestOptions.new
       @connection = HTTPConnection.new
       @app = @connection
