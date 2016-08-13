@@ -13,6 +13,8 @@ Simple and flexible HTTP client for Crystal with middleware and test support.
 * [Testing](#testing)
 * [FAQ](#faq)
   * [How to follow redirections](#how-to-follow-redirections)
+  * [How to persist cookies between requests](#how-to-persist-cookies-between-requests)
+  * [How to persist cookies past the life of the application](#how-to-persist-cookies-past-the-life-of-the-application)
 * [Development](#development)
 * [Roadmap](#roadmap)
 * [Afterword](#afterword)
@@ -254,4 +256,4 @@ But first we need to get positive feedback to ensure we're moving in the right d
 ## Contributors
 
 - [greyblake](https://github.com/greyblake) Sergey Potapov - creator, maintainer
-- [thelonelyghost](https://github.com/thelonelyghost) David Alexander
+- [thelonelyghost](https://github.com/thelonelyghost) David Alexander, cookie middleware support
