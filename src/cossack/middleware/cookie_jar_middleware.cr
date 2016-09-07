@@ -29,8 +29,15 @@ module Cossack
         cookies_to_send << cookie
       end
       cookies_to_send.add_request_headers(request.headers)
+
       response = app.call(request)
-      cookie_jar.fill_from_headers(response.headers)
+
+      cookies_recieved = CookieJar.new
+      cookies_recieved.fill_from_headers(response.headers)
+      cookies_recieved.each do |cookie|
+        cookie.domain ||= request.uri.host
+        cookie_jar << cookie
+      end
 
       response
     end
