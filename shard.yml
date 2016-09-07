@@ -9,6 +9,7 @@ license: LGPLv3
 development_dependencies:
   kemal:
     github: sdogruyol/kemal
+    version: ~> 0.15
   spec2:
-    github: greyblake/spec2.cr
-    branch: crystal-0-18-0
+    github: thelonelyghost/spec2.cr
+    branch: crystal-0-19-0
