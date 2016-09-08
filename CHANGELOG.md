@@ -1,3 +1,6 @@
+#### v0.1.4 2016-09-09
+* Crystal 0.19 support (thelonelyghost)
+
 #### v0.1.3 2016-08-13
 * Cookie middleware support (thelonelyghost)
 
