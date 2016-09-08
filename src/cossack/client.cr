@@ -54,7 +54,7 @@ module Cossack
 
         if params
           query = HTTP::Params.build do |form|
-            (params as Params).each { |name, val| form.add(name, val) }
+            (params.as(Params)).each { |name, val| form.add(name, val) }
           end
           if uri.query
             uri.query = [uri.query, query].join("&")

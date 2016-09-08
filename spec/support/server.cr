@@ -51,7 +51,7 @@ end
 
 put "/cookie" do |env|
   cookie = env.params.query["cookie"]?
-  cookie ||= env.params.json["cookie"]? as String?
+  cookie ||= env.params.json["cookie"]?.as(String?)
   if cookie
     cookie.split(";").each do |line|
       next unless line.strip.size > 0
