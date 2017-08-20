@@ -1,7 +1,7 @@
 # Cossack <img src="https://cloud.githubusercontent.com/assets/113512/15764341/65d90c06-292a-11e6-8f91-44ed93e024f8.png" alt="crystal Cossack logo" width="48">
 
-[![Build Status](https://travis-ci.org/crystalium/crystal-cossack.svg?branch=master)](https://travis-ci.org/crystalium/cossack)
-[![docrystal.org](http://docrystal.org/badge.svg?style=round)](http://docrystal.org/github.com/crystalium/cossack)
+[![Build Status](https://travis-ci.org/crystal-community/cossack.svg?branch=master)](https://travis-ci.org/crystal-community/cossack)
+[![docrystal.org](http://docrystal.org/badge.svg?style=round)](http://docrystal.org/github.com/crystal-community/cossack)
 
 Simple and flexible HTTP client for Crystal with middleware and test support.
 
@@ -27,7 +27,7 @@ Add this to your application's `shard.yml`:
 ```yaml
 dependencies:
   cossack:
-    github: crystalium/cossack
+    github: crystal-community/cossack
     version: ~> 0.1
 ```
 
@@ -83,7 +83,7 @@ The main things are: Client, Request, Response, Connection, Middleware.
 
 The following time diagram shows how it works:
 
-![Crystal HTTP client Cossack time diagram](https://raw.githubusercontent.com/crystalium/cossack/master/images/cossack_diagram.png)
+![Crystal HTTP client Cossack time diagram](https://raw.githubusercontent.com/crystal-community/cossack/master/images/cossack_diagram.png)
 
 ## Using Middleware
 
@@ -116,11 +116,11 @@ end
 response = cossack.get("/test")
 ```
 
-Cossack has some preimplemented middleware, don't be afraid to [take a look](https://github.com/crystalium/cossack/tree/master/src/cossack/middleware).
+Cossack has some preimplemented middleware, don't be afraid to [take a look](https://github.com/crystal-community/cossack/tree/master/src/cossack/middleware).
 
 ## Connection Swapping
 
-Connection is something, that receives Request and returns back Response. By default client as [HTTPConnection](https://github.com/crystalium/cossack/blob/master/src/cossack/connection/http_connection.cr),
+Connection is something, that receives Request and returns back Response. By default client as [HTTPConnection](https://github.com/crystal-community/cossack/blob/master/src/cossack/connection/http_connection.cr),
 that performs real HTTP requests. But if you don't like it by some reason, or you want to modify its behaviour, you can replace it
 with you own. It must be a proc a subclass of `Cossack::Connection`:
 
@@ -157,7 +157,7 @@ end
 
 You can find real examples in [Glosbe](https://github.com/greyblake/crystal-glosbe/blob/master/spec/glosbe/client_spec.cr) and
 [GoogleTranslate](https://github.com/greyblake/crystal-google_translate/blob/master/spec/google_translate/client_spec.cr) clients.
-Or in [Cossack specs](https://github.com/crystalium/cossack/blob/master/spec/unit/connection/test_connection_spec.cr) itself.
+Or in [Cossack specs](https://github.com/crystal-community/cossack/blob/master/spec/unit/connection/test_connection_spec.cr) itself.
 
 ## FAQ
 
