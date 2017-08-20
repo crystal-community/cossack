@@ -83,7 +83,7 @@ The main things are: Client, Request, Response, Connection, Middleware.
 
 The following time diagram shows how it works:
 
-![Crystal HTTP client Cossack time diagram](https://raw.githubusercontent.com/greyblake/crystal-cossack/master/images/cossack_diagram.png)
+![Crystal HTTP client Cossack time diagram](https://raw.githubusercontent.com/crystalium/cossack/master/images/cossack_diagram.png)
 
 ## Using Middleware
 
@@ -116,11 +116,11 @@ end
 response = cossack.get("/test")
 ```
 
-Cossack has some preimplemented middleware, don't be afraid to [take a look](https://github.com/greyblake/crystal-cossack/tree/master/src/cossack/middleware).
+Cossack has some preimplemented middleware, don't be afraid to [take a look](https://github.com/crystalium/cossack/tree/master/src/cossack/middleware).
 
 ## Connection Swapping
 
-Connection is something, that receives Request and returns back Response. By default client as [HTTPConnection](https://github.com/greyblake/crystal-cossack/blob/master/src/cossack/connection/http_connection.cr),
+Connection is something, that receives Request and returns back Response. By default client as [HTTPConnection](https://github.com/crystalium/cossack/blob/master/src/cossack/connection/http_connection.cr),
 that performs real HTTP requests. But if you don't like it by some reason, or you want to modify its behaviour, you can replace it
 with you own. It must be a proc a subclass of `Cossack::Connection`:
 
@@ -157,7 +157,7 @@ end
 
 You can find real examples in [Glosbe](https://github.com/greyblake/crystal-glosbe/blob/master/spec/glosbe/client_spec.cr) and
 [GoogleTranslate](https://github.com/greyblake/crystal-google_translate/blob/master/spec/google_translate/client_spec.cr) clients.
-Or in [Cossack specs](https://github.com/greyblake/crystal-cossack/blob/master/spec/unit/connection/test_connection_spec.cr) itself.
+Or in [Cossack specs](https://github.com/crystalium/cossack/blob/master/spec/unit/connection/test_connection_spec.cr) itself.
 
 ## FAQ
 
