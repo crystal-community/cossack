@@ -10,6 +10,6 @@ development_dependencies:
   kemal:
     github: sdogruyol/kemal
     version: ~> 0.15
+
   spec2:
-    github: thelonelyghost/spec2.cr
-    branch: crystal-0-19-0
+    github: waterlink/spec2.cr
