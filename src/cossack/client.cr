@@ -26,6 +26,14 @@ module Cossack
       initialize(base_url) { }
     end
 
+    # Equivalent to setting `headers["Authorization"]` to
+    # `"Basic #{Base64.strict_encode(username, password)}"`
+    def basic_auth(username : String, password : String)
+      username_password = "#{username}:#{password}"
+      encoded = Base64.strict_encode(username_password)
+      @headers["Authorization"] = "Basic #{encoded}"
+    end
+
     def use(middleware_class, *args, **nargs)
       @middlewares << middleware_class.new(@app, *args, **nargs)
       @app = @middlewares.last
