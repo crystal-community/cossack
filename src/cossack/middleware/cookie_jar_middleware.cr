@@ -19,9 +19,25 @@ module Cossack
     end
 
     def call(request)
-      cookie_jar.add_request_headers(request.headers)
+      cookies_to_send = CookieJar.new
+
+      cookie_jar.each do |cookie|
+        next if cookie.secure && request.uri.scheme != "https"
+        next if cookie.domain && !request.uri.host.to_s.ends_with?(cookie.domain.as(String))
+        next if cookie.path   && !request.uri.path.to_s.starts_with?(cookie.path.as(String))
+
+        cookies_to_send << cookie
+      end
+      cookies_to_send.add_request_headers(request.headers)
+
       response = app.call(request)
-      cookie_jar.fill_from_headers(response.headers)
+
+      cookies_recieved = CookieJar.new
+      cookies_recieved.fill_from_headers(response.headers)
+      cookies_recieved.each do |cookie|
+        cookie.domain ||= request.uri.host
+        cookie_jar << cookie
+      end
 
       response
     end
