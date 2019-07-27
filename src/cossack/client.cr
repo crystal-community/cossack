@@ -5,7 +5,7 @@ module Cossack
     @base_uri : URI
     @headers : HTTP::Headers
     @cookies : CookieJar
-    @app : Middleware|Connection|Proc(Request, Response)
+    @app : Middleware | Connection | Proc(Request, Response)
 
     getter :base_uri, :headers, :request_options, :connection, :cookies
 
@@ -31,7 +31,7 @@ module Cossack
       @app = @middlewares.last
     end
 
-    def connection=(conn : Proc(Request, Response)|Connection)
+    def connection=(conn : Proc(Request, Response) | Connection)
       @connection = conn
       if @middlewares.first?
         @middlewares.first.__set_app__(@connection)
@@ -69,20 +69,18 @@ module Cossack
       end
     {% end %}
 
-
     {% for method in %w(post put patch) %}
-      def {{method.id}}(url : String, body : String = "")
+      def {{method.id}}(url : String, body : BodyType = "")
         {{method.id}}(url, body) { }
       end
 
-      def {{method.id}}(url : String, body : String = "")
+      def {{method.id}}(url : String, body : BodyType = "")
         uri = complete_uri!(URI.parse(url))
         request = Request.new("{{method.id.upcase}}", uri, @headers.dup, body, @request_options.dup)
         yield(request)
         call(request)
       end
     {% end %}
-
 
     private def default_headers
       HTTP::Headers.new.tap do |headers|

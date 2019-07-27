@@ -5,6 +5,7 @@ require "./cossack/**"
 
 module Cossack
   alias Params = Hash(String, String)
+  alias BodyType = String | Bytes | IO | Nil
 
   # Common Cossack error.
   class Error < Exception; end
