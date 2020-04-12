@@ -2,7 +2,7 @@ module Cossack
   abstract class Middleware
     abstract def call(request : Request) : Response
 
-    @app : Middleware|Connection|Proc(Request, Response)
+    @app : Middleware | Connection | Proc(Request, Response)
 
     getter :app
 

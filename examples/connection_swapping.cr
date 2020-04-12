@@ -1,7 +1,7 @@
 require "../src/cossack"
 
 client = Cossack::Client.new("https://raw.githubusercontent.com")
-client.connection = -> (request : Cossack::Request) do
+client.connection = ->(request : Cossack::Request) do
   Cossack::Response.new(200, "Everything is fine")
 end
 

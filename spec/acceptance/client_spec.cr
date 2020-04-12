@@ -16,7 +16,7 @@ Spec2.describe "Client" do
   end
 
   it "sends User-Agent header by default" do
-    client =  Cossack::Client.new(TEST_SERVER_URL)
+    client = Cossack::Client.new(TEST_SERVER_URL)
     response = client.get("/http/reflect")
     expect(response.headers["REQUEST-HEADER-User-Agent"]?).to eq "Cossack v#{Cossack::VERSION}"
   end

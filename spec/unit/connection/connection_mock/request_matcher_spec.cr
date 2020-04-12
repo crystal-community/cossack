@@ -6,7 +6,7 @@ Spec2.describe Cossack::TestConnection::RequestMatcher do
 
   let(matcher) { Cossack::TestConnection::RequestMatcher.new(method, url, headers, body) }
   let(method) { nil }
-  let(url) { nil}
+  let(url) { nil }
   let(headers) { {} of String => String }
   let(body) { nil }
 
@@ -61,12 +61,12 @@ Spec2.describe Cossack::TestConnection::RequestMatcher do
 
             context "when headers are given" do
               context "when one of headers do not match" do
-                let(headers) { { "User-Agent" => "Firefox" } }
+                let(headers) { {"User-Agent" => "Firefox"} }
                 it "returns false" { expect(subject).to eq false }
               end
 
               context "when all headers match" do
-                let(headers) { { "User-Agent" => "Cossack" } }
+                let(headers) { {"User-Agent" => "Cossack"} }
                 it "returns true" { expect(subject).to eq true }
 
                 context "when body is specified" do
@@ -77,7 +77,7 @@ Spec2.describe Cossack::TestConnection::RequestMatcher do
 
                   context "when body matches" do
                     let(body) { "The love" }
-                    it "returns true" { expect(subject).to eq true}
+                    it "returns true" { expect(subject).to eq true }
                   end
                 end
               end

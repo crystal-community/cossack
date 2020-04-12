@@ -8,7 +8,7 @@ module Cossack
   # domain, http_only, and path restrictions
   class CookieJar < HTTP::Cookies
     def self.from_file(file_path : String)
-      new.tap {|cj| cj.import_from_file(file_path) }
+      new.tap { |cj| cj.import_from_file(file_path) }
     end
 
     def export_to_file(file_path : String)

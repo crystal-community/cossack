@@ -28,7 +28,6 @@ module Cossack
       @headers = HTTP::Headers.new
     end
 
-
     # Is this a 2xx response?
     def success?
       (200..299).includes?(status)
