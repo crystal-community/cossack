@@ -115,7 +115,7 @@ Spec2.describe Cossack::TestConnection do
     end
 
     context "when body request specified" do
-      let(request_body) { "REQUEST_BODY"}
+      let(request_body) { "REQUEST_BODY" }
       context "when body matches" do
         it "returns response" do
           connection.stub_post("/ping", "REQUEST_BODY", {200, "pong"})

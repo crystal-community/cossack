@@ -12,7 +12,6 @@ module Kemal
   end
 end
 
-
 get "/" do
   "root"
 end
@@ -28,12 +27,12 @@ REFLECT_HANDLER = ->(env : HTTP::Server::Context) do
   env.response.headers["REQUEST-METHOD"] = env.request.method.to_s
   request_body = env.request.body
   body_string = if request_body.nil?
-    ""
-  else
-    sb = String::Builder.new
-    IO.copy(request_body, sb)
-    sb.to_s
-  end
+                  ""
+                else
+                  sb = String::Builder.new
+                  IO.copy(request_body, sb)
+                  sb.to_s
+                end
   env.response.headers["REQUEST-BODY"] = body_string
 
   env.request.headers.each do |name, value|

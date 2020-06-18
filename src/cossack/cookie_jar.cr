@@ -8,7 +8,7 @@ module Cossack
   # domain, http_only, and path restrictions
   class CookieJar < HTTP::Cookies
     def self.from_file(file_path : String)
-      new.tap {|cj| cj.import_from_file(file_path) }
+      new.tap { |cj| cj.import_from_file(file_path) }
     end
 
     def export_to_file(file_path : String)
@@ -26,29 +26,18 @@ module Cossack
       # imports from Set-Cookie header values
       tmp_headers = HTTP::Headers.new
       File.each_line(file_path) do |line|
-        next unless line.strip.size == 0
+        next if line.strip.size == 0
         tmp_headers.add("Set-Cookie", line.strip)
       end
-
       fill_from_headers(tmp_headers) unless tmp_headers.empty?
     end
 
-    # OVERRIDE
-
-    # The methods below as they appear in the Std Library (as of v0.18.7) add a
-    # header that is blank if the cookie jar is empty instead of not adding any
-    # header at all.
-
-    def add_request_headers(headers)
-      super(headers) unless empty?
-
-      headers
-    end
-
-    def add_response_headers(headers)
-      super(headers) unless empty?
-
-      headers
+    def self.from(cookies : HTTP::Cookies)
+      s = new
+      cookies.each do |c|
+        s << c
+      end
+      s
     end
   end
 end

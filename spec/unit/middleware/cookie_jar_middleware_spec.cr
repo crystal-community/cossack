@@ -1,6 +1,6 @@
 require "../../spec_helper"
 
-Spec2.describe Cossack::CookieJarMiddleware do
+describe Cossack::CookieJarMiddleware do
   let(connection) { Cossack::TestConnection.new }
   let(cookie_jar) { Cossack::CookieJar.new }
   let(middleware) { Cossack::CookieJarMiddleware.new(connection, cookie_jar) }
@@ -11,21 +11,21 @@ Spec2.describe Cossack::CookieJarMiddleware do
 
   before do
     connection.stub_get("http://example.com/abc/check_cookies", {
-      "Cookie" => cookie.to_cookie_header
+      "Cookie" => cookie.to_cookie_header,
     }, {
       200,
-      "OK"
+      "OK",
     })
     connection.stub_get("http://example.com/abc/check_cookies", {
       200,
-      "Not OK"
+      "Not OK",
     })
     connection.stub_get("http://example.com/abc/set_cookies", {
       200,
       {
-        "Set-Cookie" => cookie.to_set_cookie_header
+        "Set-Cookie" => cookie.to_set_cookie_header,
       },
-      "OK"
+      "OK",
     })
   end
 

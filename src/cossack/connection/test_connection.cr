@@ -26,7 +26,7 @@ module Cossack
       end
 
       error_message = <<-MESSAGE
-      Request `#{request.method} #{request.uri.to_s}` is not stubbed.
+      Request `#{request.method} #{request.uri}` is not stubbed.
       You can stub it with the following code:\n
           connection.stub_#{request.method.downcase}("#{request.uri.path}", {200, "Response body"})
         OR
