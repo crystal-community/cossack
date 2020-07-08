@@ -8,7 +8,7 @@ module Cossack
 
       http_response = client.exec(request.method, request.uri.to_s, request.headers, request.body)
       Response.new(http_response.status_code, http_response.headers, http_response.body)
-    rescue err : IO::Timeout
+    rescue err : IO::TimeoutError
       raise TimeoutError.new(err.message, cause: err)
     end
   end
